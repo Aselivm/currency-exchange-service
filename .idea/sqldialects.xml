@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/src/main/java/org/primshits/currency_exchange/dao/CurrencyDAO.java" dialect="GenericSQL" />
     <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/d7bda1c8-e08e-467b-9f37-ec09cec0ca99/console.sql" dialect="SQLite" />
   </component>
 </project>

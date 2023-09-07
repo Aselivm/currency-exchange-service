@@ -12,13 +12,5 @@
 </head>
 <body>
 <h1>Testing JSP</h1>
-<p>
-    <%@ page import="org.primshits.currency_exchange.Info" %>
-    <% Info info = new Info();%>
-    <%=info.info()%>
-
-    <% String name = request.getParameter("name");String surname = request.getParameter("surname");%>
-    <%="Hello " + name +" "+surname%>
-</p>
 </body>
 </html>
