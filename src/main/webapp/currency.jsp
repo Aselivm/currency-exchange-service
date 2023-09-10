@@ -1,4 +1,5 @@
-<%--
+<%@ page import="org.primshits.currency_exchange.servlets.Currencies" %>
+<%@ page import="org.primshits.currency_exchange.models.Currency" %><%--
   Created by IntelliJ IDEA.
   User: step6
   Date: 28.08.2023
@@ -8,9 +9,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>First JSP</title>
+    <title>Currency</title>
 </head>
 <body>
-<h1>Testing JSP</h1>
+<%;
+Currency currency = (Currency)request.getAttribute("currency");%>
+<%= currency.getFullName()%>
 </body>
 </html>
