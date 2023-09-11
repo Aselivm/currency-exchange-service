@@ -1,6 +1,5 @@
 package org.primshits.currency_exchange.servlets;
 
-import com.sun.tools.javac.Main;
 import org.primshits.currency_exchange.dao.CurrencyDAO;
 import org.primshits.currency_exchange.models.Currency;
 
@@ -12,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-@WebServlet(urlPatterns = "/currencies")
+@WebServlet(urlPatterns = {"/currencies","/currency/*"})
 public class Currencies extends HttpServlet {
 
     private final CurrencyDAO currencyDAO;
@@ -22,7 +21,6 @@ public class Currencies extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         super.doPost(request, response);
     }
 
@@ -30,10 +28,14 @@ public class Currencies extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String pathInfo = request.getPathInfo();
         if (pathInfo != null && pathInfo.length() > 1) {
-            String currencyCode = pathInfo.substring(1);
-            response.sendRedirect("currency/"+currencyCode);
+            String currencyCode = request.getPathInfo().substring(1);
+            Currency currency = getCurrencyInfo(currencyCode);
+            if(currency!=null) {
+                request.setAttribute("currency",currency);
+                getServletContext().getRequestDispatcher("/currency.jsp").forward(request, response);
+            }
         } else {
-            request.setAttribute("currencies",this);
+            request.setAttribute("currencies",currencyDAO);
             request.getRequestDispatcher("currencies.jsp").forward(request, response);
         }
     }
@@ -43,9 +45,6 @@ public class Currencies extends HttpServlet {
         return currencyDAO.show(currencyCode);
     }
 
-    public CurrencyDAO getCurrencyDAO() {
-        return currencyDAO;
-    }
 
     @Override
     public void destroy() {

@@ -1,6 +1,7 @@
 <%@ page import="org.primshits.currency_exchange.servlets.Currencies" %>
 <%@ page import="org.primshits.currency_exchange.models.Currency" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%@ page import="org.primshits.currency_exchange.dao.CurrencyDAO" %><%--
   Created by IntelliJ IDEA.
   User: step6
   Date: 07.09.2023
@@ -14,13 +15,16 @@
 </head>
 <body>
 <h1>Список валют</h1>
-<% Currencies currencies = (Currencies)request.getAttribute("currencies");
-    List<Currency> currencyList = currencies.getCurrencyDAO().index();
+<% CurrencyDAO currencyDAO = (CurrencyDAO)request.getAttribute("currencies");
+    List<Currency> currencyList = currencyDAO.index();
     for(Currency currency : currencyList){
 %>
-<%= currency + "<br/>"%>
+<a href="<%= request.getContextPath() %>/currency/<%= currency.getCode() %>"><%= currency + "<br/>" %></a>
 <%
     }
 %>
+<br/>
+<hr/>
+<a href="${pageContext.request.contextPath}/newCurrency">Add new currency</a>
 </body>
 </html>

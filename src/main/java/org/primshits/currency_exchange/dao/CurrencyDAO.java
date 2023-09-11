@@ -32,6 +32,7 @@ public class CurrencyDAO implements CRUD<Currency> {
 
             while(resultSet.next()){
                 Currency currency = new Currency();
+                currency.setId(resultSet.getInt("ID"));
                 currency.setCode(resultSet.getString("Code"));
                 currency.setFullName(resultSet.getString("FullName"));
                 currency.setSign(resultSet.getString("Sign"));
@@ -57,6 +58,7 @@ public class CurrencyDAO implements CRUD<Currency> {
 
             currency = new Currency();
 
+            currency.setId(resultSet.getInt("ID"));
             currency.setCode(resultSet.getString("Code"));
             currency.setFullName(resultSet.getString("FullName"));
             currency.setSign(resultSet.getString("Sign"));
@@ -77,7 +79,7 @@ public class CurrencyDAO implements CRUD<Currency> {
             if(!resultSet.next()) return null;
 
             currency = new Currency();
-
+            currency.setId(resultSet.getInt("ID"));
             currency.setCode(resultSet.getString("Code"));
             currency.setFullName(resultSet.getString("FullName"));
             currency.setSign(resultSet.getString("Sign"));

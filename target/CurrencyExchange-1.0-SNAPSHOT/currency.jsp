@@ -14,6 +14,6 @@
 <body>
 <%;
 Currency currency = (Currency)request.getAttribute("currency");%>
-<%= currency.getFullName()%>
+<%= currency%>
 </body>
 </html>
