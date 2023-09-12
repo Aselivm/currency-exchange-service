@@ -69,6 +69,7 @@ public class CurrencyDAO implements CRUD<Currency> {
         }
         return currency;
     }
+
     public Currency show(String code) {
         Currency currency = null;
         try(Connection connection = DriverManager.getConnection(URL)) {
@@ -130,6 +131,19 @@ public class CurrencyDAO implements CRUD<Currency> {
             PreparedStatement preparedStatement =  connection.prepareStatement("DELETE FROM Currency WHERE id=?");
 
             preparedStatement.setInt(1, id);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
+
+    public void delete(String code) {
+        try(Connection connection = DriverManager.getConnection(URL)) {
+            PreparedStatement preparedStatement =  connection.prepareStatement("DELETE FROM Currency WHERE code = ?");
+
+            preparedStatement.setString(1, code);
 
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {

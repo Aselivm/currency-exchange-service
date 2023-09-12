@@ -15,5 +15,11 @@
 <%;
 Currency currency = (Currency)request.getAttribute("currency");%>
 <%= currency%>
+<hr/>
+<form method="POST" action="/currency/<%=currency.getCode()%>">
+    <input type="hidden" name="_method" value="DELETE">
+    <button type="submit">delete</button>
+</form>
+<%--DELETE BUTTON TODO --%>
 </body>
 </html>
