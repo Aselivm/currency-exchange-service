@@ -1,7 +1,6 @@
-package org.primshits.currency_exchange.models;
+package org.primshits.currency_exchange.dto;
 
-public class Currency {
-
+public class CurrencyDTO {
     private int id;
     private String code;
     private String fullName;
@@ -39,13 +38,4 @@ public class Currency {
         this.sign = sign;
     }
 
-    @Override
-    public String toString() {
-        return "{" +
-                "\"id\": " + id +
-                ", \"code\": \"" + code + '\"' +
-                ", \"fullName\": \"" + fullName + '\"' +
-                ", \"sign\": \"" + sign + '\"' +
-                '}';
-    }
 }

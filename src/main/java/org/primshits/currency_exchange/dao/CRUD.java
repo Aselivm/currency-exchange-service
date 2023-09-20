@@ -13,5 +13,5 @@ public interface CRUD<T> {
     void update(int id, T t);
 
     void delete(int id);
-
+    //TODO Деплой
 }
