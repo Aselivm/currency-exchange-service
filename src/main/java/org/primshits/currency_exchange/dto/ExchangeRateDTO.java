@@ -1,7 +1,8 @@
-package org.primshits.currency_exchange.models;
+package org.primshits.currency_exchange.dto;
 
-public class ExchangeRate {
+import org.primshits.currency_exchange.models.Currency;
 
+public class ExchangeRateDTO {
     private int id;
     private Currency baseCurrency;
     private Currency targetCurrency;
@@ -39,12 +40,5 @@ public class ExchangeRate {
         this.rate = rate;
     }
 
-    @Override
-    public String toString() {
-        return "exchangeRate{" +
-                "<br/>baseCurrency=" + baseCurrency +
-                ", <br/>targetCurrency=" + targetCurrency +
-                ", <br/>rate=" + rate +
-                "}<br/>";
-    }
+
 }

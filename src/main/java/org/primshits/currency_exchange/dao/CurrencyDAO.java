@@ -128,6 +128,7 @@ public class CurrencyDAO implements CRUD<Currency> {
     @Override
     public void delete(int id) {
         try(Connection connection = DriverManager.getConnection(URL)) {
+            connection.createStatement().execute("PRAGMA foreign_keys=ON");
             PreparedStatement preparedStatement =  connection.prepareStatement("DELETE FROM Currency WHERE id=?");
 
             preparedStatement.setInt(1, id);
@@ -141,6 +142,7 @@ public class CurrencyDAO implements CRUD<Currency> {
 
     public void delete(String code) {
         try(Connection connection = DriverManager.getConnection(URL)) {
+            connection.createStatement().execute("PRAGMA foreign_keys=ON");
             PreparedStatement preparedStatement =  connection.prepareStatement("DELETE FROM Currency WHERE code = ?");
 
             preparedStatement.setString(1, code);

@@ -7,7 +7,7 @@ import org.primshits.currency_exchange.models.Currency;
 import java.util.List;
 
 public class CurrencyService implements CRUD<Currency> {
-    CurrencyDAO currencyDAO;
+    private final CurrencyDAO currencyDAO;
     public CurrencyService() {
         currencyDAO = new CurrencyDAO();
     }
@@ -39,6 +39,7 @@ public class CurrencyService implements CRUD<Currency> {
     @Override
     public void delete(int id) {
         currencyDAO.delete(id);
+
     }
 
     public void delete(String code) {
