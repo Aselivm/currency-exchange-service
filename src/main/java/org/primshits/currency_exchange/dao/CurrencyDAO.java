@@ -6,27 +6,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CurrencyDAO implements CRUD<Currency> {
-
-    public static void main(String[] args) {
-        CurrencyDAO currencyDAO = new CurrencyDAO();
-        System.out.println(currencyDAO.index());
-    }
-
-    private static final String URL = "jdbc:sqlite:A:/sqliteDB/mydatabase.sqlite";
-
-    static {
-        try {
-            Class.forName("org.primshits.currency_exchange.dao.CurrencyDAO");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
+public class CurrencyDAO extends BaseDAO implements CRUD<Currency> {
     @Override
     public List<Currency> index() {
         List<Currency> currencies = new ArrayList<>();
-        try(Connection connection = DriverManager.getConnection(URL)) {
+        try{
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("select * from Currency");
 
@@ -47,8 +31,8 @@ public class CurrencyDAO implements CRUD<Currency> {
 
     @Override
     public Currency show(int id) {
-        Currency currency = null;
-        try(Connection connection = DriverManager.getConnection(URL)) {
+        Currency currency;
+        try {
             PreparedStatement preparedStatement =
                     connection.prepareStatement("select * from Currency where id = ?");
             preparedStatement.setInt(1,id);
@@ -71,8 +55,8 @@ public class CurrencyDAO implements CRUD<Currency> {
     }
 
     public Currency show(String code) {
-        Currency currency = null;
-        try(Connection connection = DriverManager.getConnection(URL)) {
+        Currency currency;
+        try {
             PreparedStatement preparedStatement =
                     connection.prepareStatement("select * from Currency where Code = ?");
             preparedStatement.setString(1,code);
@@ -93,7 +77,7 @@ public class CurrencyDAO implements CRUD<Currency> {
 
     @Override
     public void save(Currency currency) {
-        try(Connection connection = DriverManager.getConnection(URL)) {
+        try {
             PreparedStatement preparedStatement =
                     connection.prepareStatement("INSERT INTO Currency(Code,FullName,Sign) values (?,?,?)");
             preparedStatement.setString(1,currency.getCode());
@@ -110,7 +94,7 @@ public class CurrencyDAO implements CRUD<Currency> {
 
     @Override
     public void update(int id, Currency currency) {
-        try(Connection connection = DriverManager.getConnection(URL)) {
+        try{
             PreparedStatement preparedStatement =
                     connection.prepareStatement("UPDATE Currency SET Code = ?, FullName = ?, Sign = ? where id = ?");
             preparedStatement.setString(1,currency.getCode());
@@ -127,7 +111,7 @@ public class CurrencyDAO implements CRUD<Currency> {
 
     @Override
     public void delete(int id) {
-        try(Connection connection = DriverManager.getConnection(URL)) {
+        try {
             connection.createStatement().execute("PRAGMA foreign_keys=ON");
             PreparedStatement preparedStatement =  connection.prepareStatement("DELETE FROM Currency WHERE id=?");
 
@@ -141,7 +125,7 @@ public class CurrencyDAO implements CRUD<Currency> {
     }
 
     public void delete(String code) {
-        try(Connection connection = DriverManager.getConnection(URL)) {
+        try {
             connection.createStatement().execute("PRAGMA foreign_keys=ON");
             PreparedStatement preparedStatement =  connection.prepareStatement("DELETE FROM Currency WHERE code = ?");
 

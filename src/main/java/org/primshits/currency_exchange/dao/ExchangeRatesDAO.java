@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExchangeRatesDAO implements CRUD<ExchangeRate> {
+public class ExchangeRatesDAO extends BaseDAO implements CRUD<ExchangeRate> {
 
     private CurrencyService currencyService;
 
@@ -15,19 +15,10 @@ public class ExchangeRatesDAO implements CRUD<ExchangeRate> {
         currencyService = new CurrencyService();
     }
 
-    private static final String URL = "jdbc:sqlite:A:/sqliteDB/mydatabase.sqlite";
-
-    static {
-        try {
-            Class.forName("org.primshits.currency_exchange.dao.CurrencyDAO");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
     @Override
     public List<ExchangeRate> index() {
         List<ExchangeRate> exchangeRateList = new ArrayList<>();
-        try(Connection connection = DriverManager.getConnection(URL)) {
+        try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("select * from ExchangeRates");
 
@@ -52,7 +43,7 @@ public class ExchangeRatesDAO implements CRUD<ExchangeRate> {
     @Override
     public ExchangeRate show(int id) {
         ExchangeRate exchangeRate = null;
-        try(Connection connection = DriverManager.getConnection(URL)) {
+        try {
             PreparedStatement preparedStatement =
                     connection.prepareStatement("select * from ExchangeRates where id = ?");
             preparedStatement.setInt(1,id);
@@ -72,7 +63,7 @@ public class ExchangeRatesDAO implements CRUD<ExchangeRate> {
     }
 
     public ExchangeRate show(int baseCurrencyId, int targetCurrencyId) {
-        try (Connection connection = DriverManager.getConnection(URL)) {
+        try{
 
             ExchangeRate exchangeRate = findExchangeRate(connection, baseCurrencyId, targetCurrencyId);
 
@@ -103,7 +94,7 @@ public class ExchangeRatesDAO implements CRUD<ExchangeRate> {
 
     @Override
     public void save(ExchangeRate exchangeRate) {
-        try(Connection connection = DriverManager.getConnection(URL)) {
+        try{
             PreparedStatement preparedStatement =
                     connection.prepareStatement("INSERT INTO ExchangeRates(BaseCurrency,TargetCurrency,Rate) values (?,?,?)");
             preparedStatement.setInt(1,exchangeRate.getBaseCurrency().getId());
@@ -119,7 +110,7 @@ public class ExchangeRatesDAO implements CRUD<ExchangeRate> {
 
     @Override
     public void update(int id, ExchangeRate exchangeRate) {
-        try(Connection connection = DriverManager.getConnection(URL)) {
+        try{
             PreparedStatement preparedStatement =
                     connection.prepareStatement("UPDATE ExchangeRates SET Rate = ? where id = ?");
             preparedStatement.setDouble(1,exchangeRate.getRate());
@@ -133,7 +124,7 @@ public class ExchangeRatesDAO implements CRUD<ExchangeRate> {
 
     @Override
     public void delete(int id) {
-        try(Connection connection = DriverManager.getConnection(URL)) {
+        try{
             PreparedStatement preparedStatement =  connection.prepareStatement("DELETE FROM ExchangeRates WHERE id=?");
 
             preparedStatement.setInt(1, id);
