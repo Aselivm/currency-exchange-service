@@ -10,7 +10,7 @@ public class CurrencyDAO extends BaseDAO implements CRUD<Currency> {
     @Override
     public List<Currency> index() {
         List<Currency> currencies = new ArrayList<>();
-        try{
+        try(Connection connection = connectionBuilder.getConnection()){
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("select * from Currency");
 
@@ -32,12 +32,11 @@ public class CurrencyDAO extends BaseDAO implements CRUD<Currency> {
     @Override
     public Currency show(int id) {
         Currency currency;
-        try {
+        try(Connection connection = connectionBuilder.getConnection()) {
             PreparedStatement preparedStatement =
                     connection.prepareStatement("select * from Currency where id = ?");
             preparedStatement.setInt(1,id);
             ResultSet resultSet = preparedStatement.executeQuery();
-
             resultSet.next();
 
             currency = new Currency();
@@ -56,7 +55,7 @@ public class CurrencyDAO extends BaseDAO implements CRUD<Currency> {
 
     public Currency show(String code) {
         Currency currency;
-        try {
+        try(Connection connection = connectionBuilder.getConnection()) {
             PreparedStatement preparedStatement =
                     connection.prepareStatement("select * from Currency where Code = ?");
             preparedStatement.setString(1,code);
@@ -77,7 +76,7 @@ public class CurrencyDAO extends BaseDAO implements CRUD<Currency> {
 
     @Override
     public void save(Currency currency) {
-        try {
+        try(Connection connection = connectionBuilder.getConnection()) {
             PreparedStatement preparedStatement =
                     connection.prepareStatement("INSERT INTO Currency(Code,FullName,Sign) values (?,?,?)");
             preparedStatement.setString(1,currency.getCode());
@@ -94,7 +93,7 @@ public class CurrencyDAO extends BaseDAO implements CRUD<Currency> {
 
     @Override
     public void update(int id, Currency currency) {
-        try{
+        try(Connection connection = connectionBuilder.getConnection()){
             PreparedStatement preparedStatement =
                     connection.prepareStatement("UPDATE Currency SET Code = ?, FullName = ?, Sign = ? where id = ?");
             preparedStatement.setString(1,currency.getCode());
@@ -111,7 +110,7 @@ public class CurrencyDAO extends BaseDAO implements CRUD<Currency> {
 
     @Override
     public void delete(int id) {
-        try {
+        try(Connection connection = connectionBuilder.getConnection()) {
             connection.createStatement().execute("PRAGMA foreign_keys=ON");
             PreparedStatement preparedStatement =  connection.prepareStatement("DELETE FROM Currency WHERE id=?");
 
@@ -125,7 +124,7 @@ public class CurrencyDAO extends BaseDAO implements CRUD<Currency> {
     }
 
     public void delete(String code) {
-        try {
+        try(Connection connection = connectionBuilder.getConnection()) {
             connection.createStatement().execute("PRAGMA foreign_keys=ON");
             PreparedStatement preparedStatement =  connection.prepareStatement("DELETE FROM Currency WHERE code = ?");
 

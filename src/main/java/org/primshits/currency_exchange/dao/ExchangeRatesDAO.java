@@ -1,5 +1,6 @@
 package org.primshits.currency_exchange.dao;
 
+import org.primshits.currency_exchange.models.Currency;
 import org.primshits.currency_exchange.models.ExchangeRate;
 import org.primshits.currency_exchange.service.CurrencyService;
 
@@ -9,7 +10,7 @@ import java.util.List;
 
 public class ExchangeRatesDAO extends BaseDAO implements CRUD<ExchangeRate> {
 
-    private CurrencyService currencyService;
+    private final CurrencyService currencyService;
 
     public ExchangeRatesDAO() {
         currencyService = new CurrencyService();
@@ -18,9 +19,9 @@ public class ExchangeRatesDAO extends BaseDAO implements CRUD<ExchangeRate> {
     @Override
     public List<ExchangeRate> index() {
         List<ExchangeRate> exchangeRateList = new ArrayList<>();
-        try {
+        try(Connection connection = connectionBuilder.getConnection()) {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from ExchangeRates");
+            ResultSet resultSet = statement.executeQuery("select * from ExchangeRate");
 
             while(resultSet.next()){
                 ExchangeRate exchangeRate = new ExchangeRate();
@@ -31,7 +32,6 @@ public class ExchangeRatesDAO extends BaseDAO implements CRUD<ExchangeRate> {
                 exchangeRate.setRate(resultSet.getDouble("Rate"));
 
                 exchangeRateList.add(exchangeRate);
-                System.out.println(exchangeRate);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -42,10 +42,10 @@ public class ExchangeRatesDAO extends BaseDAO implements CRUD<ExchangeRate> {
 
     @Override
     public ExchangeRate show(int id) {
-        ExchangeRate exchangeRate = null;
-        try {
+        ExchangeRate exchangeRate;
+        try(Connection connection = connectionBuilder.getConnection()) {
             PreparedStatement preparedStatement =
-                    connection.prepareStatement("select * from ExchangeRates where id = ?");
+                    connection.prepareStatement("select * from ExchangeRate where id = ?");
             preparedStatement.setInt(1,id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if(!resultSet.next()) return null;
@@ -63,40 +63,22 @@ public class ExchangeRatesDAO extends BaseDAO implements CRUD<ExchangeRate> {
     }
 
     public ExchangeRate show(int baseCurrencyId, int targetCurrencyId) {
-        try{
+        Currency baseCurrency = currencyService.show(baseCurrencyId);
+        Currency targetCurrency = currencyService.show(targetCurrencyId);
+        return showExchangeRate(baseCurrency, targetCurrency);
+    }
 
-            ExchangeRate exchangeRate = findExchangeRate(connection, baseCurrencyId, targetCurrencyId);
-
-            if (exchangeRate != null) {
-                return exchangeRate;
-            }
-
-            exchangeRate = findExchangeRate(connection, targetCurrencyId, baseCurrencyId);
-
-            if (exchangeRate != null) {
-                exchangeRate.setRate(1 / exchangeRate.getRate());
-                return exchangeRate;
-            }
-
-            exchangeRate = findExchangeRateOfSameCurrency(baseCurrencyId, targetCurrencyId);
-
-            if(exchangeRate!= null){
-                return exchangeRate;
-            }
-
-            exchangeRate = findExchangeRateWithEURBase(baseCurrencyId,targetCurrencyId);
-
-            return exchangeRate;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public ExchangeRate show(String baseCurrencyCode, String targetCurrencyCode) {
+        Currency baseCurrency = currencyService.show(baseCurrencyCode);
+        Currency targetCurrency = currencyService.show(targetCurrencyCode);
+        return showExchangeRate(baseCurrency, targetCurrency);
     }
 
     @Override
     public void save(ExchangeRate exchangeRate) {
-        try{
+        try(Connection connection = connectionBuilder.getConnection()){
             PreparedStatement preparedStatement =
-                    connection.prepareStatement("INSERT INTO ExchangeRates(BaseCurrency,TargetCurrency,Rate) values (?,?,?)");
+                    connection.prepareStatement("INSERT INTO ExchangeRate(BaseCurrency,TargetCurrency,Rate) values (?,?,?)");
             preparedStatement.setInt(1,exchangeRate.getBaseCurrency().getId());
             preparedStatement.setInt(2,exchangeRate.getTargetCurrency().getId());
             preparedStatement.setDouble(3,exchangeRate.getRate());
@@ -110,9 +92,9 @@ public class ExchangeRatesDAO extends BaseDAO implements CRUD<ExchangeRate> {
 
     @Override
     public void update(int id, ExchangeRate exchangeRate) {
-        try{
+        try(Connection connection = connectionBuilder.getConnection()){
             PreparedStatement preparedStatement =
-                    connection.prepareStatement("UPDATE ExchangeRates SET Rate = ? where id = ?");
+                    connection.prepareStatement("UPDATE ExchangeRate SET Rate = ? where id = ?");
             preparedStatement.setDouble(1,exchangeRate.getRate());
             preparedStatement.setInt(2,exchangeRate.getId());
             preparedStatement.executeUpdate();
@@ -124,8 +106,8 @@ public class ExchangeRatesDAO extends BaseDAO implements CRUD<ExchangeRate> {
 
     @Override
     public void delete(int id) {
-        try{
-            PreparedStatement preparedStatement =  connection.prepareStatement("DELETE FROM ExchangeRates WHERE id=?");
+        try(Connection connection = connectionBuilder.getConnection()){
+            PreparedStatement preparedStatement =  connection.prepareStatement("DELETE FROM ExchangeRate WHERE id=?");
 
             preparedStatement.setInt(1, id);
 
@@ -135,18 +117,47 @@ public class ExchangeRatesDAO extends BaseDAO implements CRUD<ExchangeRate> {
         }
     }
 
-    private ExchangeRate findExchangeRate(Connection connection, int baseCurrencyId, int targetCurrencyId) throws SQLException {
+    private ExchangeRate showExchangeRate(Currency baseCurrency, Currency targetCurrency) {
+        try (Connection connection = connectionBuilder.getConnection()) {
+            ExchangeRate exchangeRate = findExchangeRate(connection, baseCurrency, targetCurrency);
+
+            if (exchangeRate != null) {
+                return exchangeRate;
+            }
+
+            exchangeRate = findExchangeRate(connection, targetCurrency, baseCurrency);
+
+            if (exchangeRate != null) {
+                exchangeRate.setRate(1 / exchangeRate.getRate());
+                return exchangeRate;
+            }
+
+            exchangeRate = findExchangeRateOfSameCurrency(baseCurrency, targetCurrency);
+
+            if (exchangeRate != null) {
+                return exchangeRate;
+            }
+
+            exchangeRate = findExchangeRateWithEURBase(baseCurrency, targetCurrency);
+
+            return exchangeRate;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private ExchangeRate findExchangeRate(Connection connection, Currency baseCurrency, Currency targetCurrency) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(
-                "SELECT * FROM ExchangeRates WHERE BaseCurrencyId = ? AND TargetCurrencyId = ?");
-        preparedStatement.setInt(1, baseCurrencyId);
-        preparedStatement.setInt(2, targetCurrencyId);
+                "SELECT * FROM ExchangeRate WHERE BaseCurrencyId = ? AND TargetCurrencyId = ?");
+        preparedStatement.setInt(1, baseCurrency.getId());
+        preparedStatement.setInt(2, targetCurrency.getId());
         ResultSet resultSet = preparedStatement.executeQuery();
 
         if (resultSet.next()) {
             ExchangeRate exchangeRate = new ExchangeRate();
             exchangeRate.setId(resultSet.getInt("ID"));
-            exchangeRate.setBaseCurrency(currencyService.show(baseCurrencyId));
-            exchangeRate.setTargetCurrency(currencyService.show(targetCurrencyId));
+            exchangeRate.setBaseCurrency(baseCurrency);
+            exchangeRate.setTargetCurrency(targetCurrency);
             exchangeRate.setRate(resultSet.getDouble("Rate"));
             return exchangeRate;
         }
@@ -154,24 +165,23 @@ public class ExchangeRatesDAO extends BaseDAO implements CRUD<ExchangeRate> {
         return null;
     }
 
-    private ExchangeRate findExchangeRateOfSameCurrency(int baseCurrencyId, int targetCurrencyId) throws SQLException {
-        if(baseCurrencyId!=targetCurrencyId) return null;
+    private ExchangeRate findExchangeRateOfSameCurrency(Currency baseCurrency, Currency targetCurrency) throws SQLException {
+        if(baseCurrency!=targetCurrency) return null;
         ExchangeRate exchangeRate = new ExchangeRate();
         exchangeRate.setId(0);
-        exchangeRate.setBaseCurrency(currencyService.show(baseCurrencyId));
-        exchangeRate.setTargetCurrency(currencyService.show(targetCurrencyId));
+        exchangeRate.setBaseCurrency(baseCurrency);
+        exchangeRate.setTargetCurrency(targetCurrency);
         exchangeRate.setRate(1);
         return exchangeRate;
     }
 
-    private ExchangeRate findExchangeRateWithEURBase(int baseCurrencyId, int targetCurrencyId) {
-        int eurId = currencyService.show("EUR").getId();
-        ExchangeRate baseAndEur = show(eurId,baseCurrencyId);
-        ExchangeRate targetAndEur = show(eurId,targetCurrencyId);
-        double rate = baseAndEur.getRate()/targetAndEur.getRate();
+    private ExchangeRate findExchangeRateWithEURBase(Currency baseCurrency, Currency targetCurrency) {
+        ExchangeRate baseAndEur = show("EUR",baseCurrency.getCode());
+        ExchangeRate targetAndEur = show("EUR",targetCurrency.getCode());
+        double rate = targetAndEur.getRate()/baseAndEur.getRate();
         ExchangeRate exchangeRate = new ExchangeRate();
-        exchangeRate.setBaseCurrency(currencyService.show(baseCurrencyId));
-        exchangeRate.setTargetCurrency(currencyService.show(targetCurrencyId));
+        exchangeRate.setBaseCurrency(baseCurrency);
+        exchangeRate.setTargetCurrency(targetCurrency);
         exchangeRate.setRate(rate);
         return exchangeRate;
     }

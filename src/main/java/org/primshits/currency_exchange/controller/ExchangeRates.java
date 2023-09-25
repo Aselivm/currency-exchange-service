@@ -1,7 +1,7 @@
 package org.primshits.currency_exchange.controller;
 
-import org.primshits.currency_exchange.dao.ExchangeRatesDAO;
-import org.primshits.currency_exchange.dto.CurrencyDTO;
+import org.primshits.currency_exchange.converter.ExchangeRateConverter;
+import org.primshits.currency_exchange.dto.ExchangeRateDTO;
 import org.primshits.currency_exchange.models.Currency;
 import org.primshits.currency_exchange.models.ExchangeRate;
 
@@ -12,12 +12,29 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = "/exchangeRates")
-public class ExchangeRates extends CurrencyServlets{
+public class ExchangeRates extends BaseServlet {
+    private ExchangeRateConverter exchangeRateConverter;
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-            req.setAttribute("exchangeRatesService", exchangeRatesService);
-            req.getRequestDispatcher("exchangeRatesList.jsp").forward(req, resp);
+    public void init() throws ServletException {
+        super.init();
+        exchangeRateConverter = new ExchangeRateConverter(currencyService);
+    }
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        resp.setStatus(HttpServletResponse.SC_OK);
+        objectMapper.writeValue(resp.getOutputStream(),exchangeRatesService.index());
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String baseCurrencyCode = req.getParameter("baseCurrencyCode");
+        String targetCurrencyCode = req.getParameter("targetCurrencyCode");
+        double rate = Double.parseDouble(req.getParameter("rate"));
+        ExchangeRateDTO exchangeRateDTO = exchangeRateConverter.putToDTO(baseCurrencyCode, targetCurrencyCode, rate);
+        exchangeRatesService.save(exchangeRateConverter.convert(exchangeRateDTO));
+        resp.setStatus(HttpServletResponse.SC_OK);
+        objectMapper.writeValue(resp.getOutputStream(),exchangeRatesService.show(baseCurrencyCode,targetCurrencyCode));
     }
 
 }

@@ -28,6 +28,10 @@ public class ExchangeRatesService implements CRUD<ExchangeRate> {
         return exchangeRatesDAO.show(baseCurrencyId,targetCurrencyId);
     }
 
+    public ExchangeRate show(String baseCurrencyCode,String targetCurrencyCode){
+        return exchangeRatesDAO.show(baseCurrencyCode,targetCurrencyCode);
+    }
+
     @Override
     public void save(ExchangeRate exchangeRate) {
         exchangeRatesDAO.save(exchangeRate);

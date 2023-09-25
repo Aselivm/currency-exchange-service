@@ -9,26 +9,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = "/currency/*")
-public class CurrencyPage extends CurrencyServlets {
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        currencyService.delete(req.getPathInfo().substring(1));
-        resp.sendRedirect("/currencies");
-    }
-
+public class CurrencyPage extends BaseServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String currencyCode = req.getPathInfo().substring(1);
-        Currency currency = getCurrencyInfo(currencyCode);
-        if(currency!=null){
-            req.setAttribute("currency", currency);
-            getServletContext().getRequestDispatcher("/currencyPage.jsp").forward(req, resp);
-        }else{
-            resp.getWriter().write("Valyuta ne naydena");
-        }
+        Currency currency = currencyService.show(currencyCode);
+        resp.setStatus(HttpServletResponse.SC_OK);
+        objectMapper.writeValue(resp.getOutputStream(),currency);
     }
 
-    public Currency getCurrencyInfo(String currencyCode){
-        return currencyService.show(currencyCode);
-    }
 }
