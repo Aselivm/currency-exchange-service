@@ -1,9 +1,7 @@
 package org.primshits.currency_exchange.controller;
 
 import org.primshits.currency_exchange.converter.ExchangeRateConverter;
-import org.primshits.currency_exchange.dto.ExchangeRateDTO;
-import org.primshits.currency_exchange.models.Currency;
-import org.primshits.currency_exchange.models.ExchangeRate;
+import org.primshits.currency_exchange.dto.ExchangeRate;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,12 +16,12 @@ public class ExchangeRates extends BaseServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        exchangeRateConverter = new ExchangeRateConverter(currencyService);
+        exchangeRateConverter = new ExchangeRateConverter();
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setStatus(HttpServletResponse.SC_OK);
-        objectMapper.writeValue(resp.getOutputStream(),exchangeRatesService.index());
+        objectMapper.writeValue(resp.getOutputStream(),exchangeRatesService.getAll());
     }
 
     @Override
@@ -31,10 +29,10 @@ public class ExchangeRates extends BaseServlet {
         String baseCurrencyCode = req.getParameter("baseCurrencyCode");
         String targetCurrencyCode = req.getParameter("targetCurrencyCode");
         double rate = Double.parseDouble(req.getParameter("rate"));
-        ExchangeRateDTO exchangeRateDTO = exchangeRateConverter.putToDTO(baseCurrencyCode, targetCurrencyCode, rate);
-        exchangeRatesService.save(exchangeRateConverter.convert(exchangeRateDTO));
+        ExchangeRate exchangeRate = exchangeRateConverter.putToDTO(baseCurrencyCode, targetCurrencyCode, rate);
+        exchangeRatesService.save(exchangeRateConverter.convert(exchangeRate));
         resp.setStatus(HttpServletResponse.SC_OK);
-        objectMapper.writeValue(resp.getOutputStream(),exchangeRatesService.show(baseCurrencyCode,targetCurrencyCode));
+        objectMapper.writeValue(resp.getOutputStream(),exchangeRatesService.get(baseCurrencyCode,targetCurrencyCode));
     }
 
 }

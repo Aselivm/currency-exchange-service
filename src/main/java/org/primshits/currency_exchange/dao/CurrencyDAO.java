@@ -1,14 +1,16 @@
 package org.primshits.currency_exchange.dao;
 
+import org.primshits.currency_exchange.mapper.CurrencyResultSetMapper;
 import org.primshits.currency_exchange.models.Currency;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class CurrencyDAO extends BaseDAO implements CRUD<Currency> {
     @Override
-    public List<Currency> index() {
+    public List<Currency> index() throws SQLException {
         List<Currency> currencies = new ArrayList<>();
         try(Connection connection = connectionBuilder.getConnection()){
             Statement statement = connection.createStatement();
@@ -22,56 +24,18 @@ public class CurrencyDAO extends BaseDAO implements CRUD<Currency> {
                 currency.setSign(resultSet.getString("Sign"));
                 currencies.add(currency);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
 
         return currencies;
     }
 
     @Override
-    public Currency show(int id) {
-        Currency currency;
-        try(Connection connection = connectionBuilder.getConnection()) {
-            PreparedStatement preparedStatement =
-                    connection.prepareStatement("select * from Currency where id = ?");
-            preparedStatement.setInt(1,id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            resultSet.next();
-
-            currency = new Currency();
-
-            currency.setId(resultSet.getInt("ID"));
-            currency.setCode(resultSet.getString("Code"));
-            currency.setFullName(resultSet.getString("FullName"));
-            currency.setSign(resultSet.getString("Sign"));
-
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return currency;
+    public Optional<Currency> show(int id) throws SQLException {
+        return fetchCurrency("select * from Currency where id = ?", String.valueOf(id));
     }
 
-    public Currency show(String code) {
-        Currency currency;
-        try(Connection connection = connectionBuilder.getConnection()) {
-            PreparedStatement preparedStatement =
-                    connection.prepareStatement("select * from Currency where Code = ?");
-            preparedStatement.setString(1,code);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if(!resultSet.next()) return null;
-
-            currency = new Currency();
-            currency.setId(resultSet.getInt("ID"));
-            currency.setCode(resultSet.getString("Code"));
-            currency.setFullName(resultSet.getString("FullName"));
-            currency.setSign(resultSet.getString("Sign"));
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return currency;
+    public Optional<Currency> show(String code) throws SQLException {
+        return fetchCurrency("select * from Currency where Code = ?", code);
     }
 
     @Override
@@ -123,7 +87,7 @@ public class CurrencyDAO extends BaseDAO implements CRUD<Currency> {
 
     }
 
-    public void delete(String code) {
+    public void delete(String code) throws SQLException {
         try(Connection connection = connectionBuilder.getConnection()) {
             connection.createStatement().execute("PRAGMA foreign_keys=ON");
             PreparedStatement preparedStatement =  connection.prepareStatement("DELETE FROM Currency WHERE code = ?");
@@ -131,9 +95,20 @@ public class CurrencyDAO extends BaseDAO implements CRUD<Currency> {
             preparedStatement.setString(1, code);
 
             preparedStatement.executeUpdate();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
         }
+    }
 
+    private Optional<Currency> fetchCurrency(String query, String parameter) throws SQLException {
+        Currency currency;
+        try (Connection connection = connectionBuilder.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, parameter);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                currency = CurrencyResultSetMapper.toCurrency(resultSet);
+                return Optional.of(currency);
+            }
+        }
+        return Optional.empty();
     }
 }

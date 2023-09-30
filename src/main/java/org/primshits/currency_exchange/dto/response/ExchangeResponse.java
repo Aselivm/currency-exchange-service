@@ -1,4 +1,4 @@
-package org.primshits.currency_exchange.dto;
+package org.primshits.currency_exchange.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,7 +8,7 @@ import org.primshits.currency_exchange.models.Currency;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ExchangeDTO {
+public class ExchangeResponse {
    private Currency baseCurrency;
    private Currency targetCurrency;
    private double rate;

@@ -1,4 +1,4 @@
-package org.primshits.currency_exchange.exceptions;
+package org.primshits.currency_exchange.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

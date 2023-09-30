@@ -1,7 +1,7 @@
 package org.primshits.currency_exchange.controller;
 
-import org.primshits.currency_exchange.dto.ExchangeDTO;
-import org.primshits.currency_exchange.models.Currency;
+import org.primshits.currency_exchange.dto.response.ExchangeResponse;
+import org.primshits.currency_exchange.models.ExchangeRate;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,16 +17,19 @@ public class Exchange extends BaseServlet {
         String to = req.getParameter("to");
         double amount = Double.parseDouble(req.getParameter("amount"));
 
-        Currency baseCurrency = currencyService.show(from);
-        Currency targetCurrency = currencyService.show(to);
+        //TODO реализовать
+        ExchangeRate exchangeRate = exchangeRatesService.get(from,to);
         double rate = 0;
         try {
-            rate = exchangeRatesService.show(baseCurrency.getId(), targetCurrency.getId()).getRate();
+            rate = exchangeRate.getRate();
         }catch (Exception e){
             //TODO
         }
         double convertedAmount = amount * rate;
-        ExchangeDTO exchangeDTO = new ExchangeDTO(baseCurrency,targetCurrency,rate,amount,convertedAmount);
-        objectMapper.writeValue(resp.getOutputStream(),exchangeDTO);
+        ExchangeResponse exchangeResponse = new ExchangeResponse(exchangeRate.getBaseCurrency(),exchangeRate.getTargetCurrency()
+                ,rate
+                ,amount
+                ,convertedAmount);
+        objectMapper.writeValue(resp.getOutputStream(), exchangeResponse);
     }
 }

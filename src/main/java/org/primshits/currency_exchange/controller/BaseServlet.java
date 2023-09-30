@@ -28,8 +28,6 @@ public abstract class BaseServlet extends HttpServlet {
         String pathInfo = req.getPathInfo();
         String baseCurrencyCode = pathInfo.substring(1, 4);
         String targetCurrencyCode = pathInfo.substring(4);
-        Currency baseCurrency = currencyService.show(baseCurrencyCode);
-        Currency targetCurrency = currencyService.show(targetCurrencyCode);
-        return exchangeRatesService.show(baseCurrency.getId(), targetCurrency.getId());
+        return exchangeRatesService.get(baseCurrencyCode, targetCurrencyCode);
     }
 }

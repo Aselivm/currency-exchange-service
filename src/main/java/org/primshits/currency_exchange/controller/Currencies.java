@@ -4,7 +4,7 @@ import org.primshits.currency_exchange.converter.CurrencyConverter;
 import org.primshits.currency_exchange.dto.CurrencyDTO;
 import org.primshits.currency_exchange.exceptions.DatabaseException;
 import org.primshits.currency_exchange.models.Currency;
-import org.primshits.currency_exchange.exceptions.ErrorResponse;
+import org.primshits.currency_exchange.dto.response.ErrorResponse;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,25 +24,34 @@ public class Currencies extends BaseServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws  IOException {
         String name = req.getParameter("name");
         String code = req.getParameter("code");
         String sign = req.getParameter("sign");
         CurrencyDTO currencyDTO = currencyConverter.putToDTO(name, code, sign);
         currencyService.save(currencyConverter.convert(currencyDTO));
         resp.setStatus(HttpServletResponse.SC_OK);
-        objectMapper.writeValue(resp.getOutputStream(),currencyService.show(code));
+        objectMapper.writeValue(resp.getOutputStream(),currencyService.get(code));
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try{
-            List<Currency> currencyList = currencyService.index();
+
+            List<Currency> currencyList = currencyService.getAll();
             resp.setStatus(HttpServletResponse.SC_OK);
             objectMapper.writeValue(resp.getOutputStream(),currencyList);
+
         }catch (DatabaseException e){
+
             resp.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
-            objectMapper.writeValue(resp.getOutputStream(), new ErrorResponse("The database is unavailable"));
+            objectMapper.writeValue(resp.getOutputStream(), new ErrorResponse(e.getMessage()));
+
+        }catch (Exception e){
+
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            objectMapper.writeValue(resp.getOutputStream(), new ErrorResponse(e.getMessage()));
+
         }
     }
 

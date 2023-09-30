@@ -1,5 +1,6 @@
 package org.primshits.currency_exchange.controller;
 
+import org.primshits.currency_exchange.dto.response.ErrorResponse;
 import org.primshits.currency_exchange.models.Currency;
 
 import javax.servlet.ServletException;
@@ -12,8 +13,12 @@ import java.io.IOException;
 public class CurrencyPage extends BaseServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String currencyCode = req.getPathInfo().substring(1);
-        Currency currency = currencyService.show(currencyCode);
+        String currencyCode = req.getPathInfo().substring(1); //TODO в утил
+        if(currencyCode.isEmpty()){
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            objectMapper.writeValue(resp.getOutputStream(),new ErrorResponse("Currency code is missing"));
+        }
+        Currency currency = currencyService.get(currencyCode);
         resp.setStatus(HttpServletResponse.SC_OK);
         objectMapper.writeValue(resp.getOutputStream(),currency);
     }
