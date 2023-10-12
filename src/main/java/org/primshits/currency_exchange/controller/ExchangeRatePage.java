@@ -12,16 +12,20 @@ import java.io.IOException;
 public class ExchangeRatePage extends BaseServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ExchangeRate exchangeRate = getExchangeRateFromPath(req);
+        String currencyPair = req.getPathInfo().substring(1);
+        ExchangeRate exchangeRate = exchangeRatesService.getExchangeRateFromCurrencyPair(currencyPair);
         resp.setStatus(HttpServletResponse.SC_OK);
         objectMapper.writeValue(resp.getOutputStream(),exchangeRate);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ExchangeRate exchangeRate = getExchangeRateFromPath(req);
-        exchangeRate.setRate(Double.parseDouble(req.getParameter("rate")));
-        exchangeRatesService.update(exchangeRate.getId(), exchangeRate);
+        String currencyPair = req.getPathInfo().substring(1);
+        String baseCurrencyCode = currencyPair.substring(0,3);
+        String targetCurrencyCode = currencyPair.substring(3);
+        double rate = Double.parseDouble(req.getParameter("rate"));
+        exchangeRatesService.updateRate(baseCurrencyCode, targetCurrencyCode, rate);
+        ExchangeRate exchangeRate = exchangeRatesService.get(baseCurrencyCode,targetCurrencyCode);
         objectMapper.writeValue(resp.getOutputStream(),exchangeRate);
     }
 }

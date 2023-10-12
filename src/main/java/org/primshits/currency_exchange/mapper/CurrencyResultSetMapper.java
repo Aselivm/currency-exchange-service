@@ -19,6 +19,7 @@ public class CurrencyResultSetMapper extends ResultSetMapper {
     }
 
     public static Currency toCurrency(String alias,ResultSet resultSet){
+        //TODO B.ID not exist =)
         try {
             return new Currency(
                     resultSet.getInt(alias+".ID"),

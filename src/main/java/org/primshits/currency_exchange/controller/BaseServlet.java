@@ -24,10 +24,4 @@ public abstract class BaseServlet extends HttpServlet {
         objectMapper = new ObjectMapper();
     }
 
-    protected ExchangeRate getExchangeRateFromPath(HttpServletRequest req) {
-        String pathInfo = req.getPathInfo();
-        String baseCurrencyCode = pathInfo.substring(1, 4);
-        String targetCurrencyCode = pathInfo.substring(4);
-        return exchangeRatesService.get(baseCurrencyCode, targetCurrencyCode);
-    }
 }

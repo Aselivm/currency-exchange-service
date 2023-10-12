@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public class CurrencyDAO extends BaseDAO implements CRUD<Currency> {
     @Override
-    public List<Currency> index() throws SQLException {
+    public List<Currency> index(){
         List<Currency> currencies = new ArrayList<>();
         try(Connection connection = connectionBuilder.getConnection()){
             Statement statement = connection.createStatement();
@@ -24,22 +24,24 @@ public class CurrencyDAO extends BaseDAO implements CRUD<Currency> {
                 currency.setSign(resultSet.getString("Sign"));
                 currencies.add(currency);
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
 
         return currencies;
     }
 
     @Override
-    public Optional<Currency> show(int id) throws SQLException {
+    public Optional<Currency> show(int id){
         return fetchCurrency("select * from Currency where id = ?", String.valueOf(id));
     }
 
-    public Optional<Currency> show(String code) throws SQLException {
+    public Optional<Currency> show(String code){
         return fetchCurrency("select * from Currency where Code = ?", code);
     }
 
     @Override
-    public void save(Currency currency) {
+    public void save(Currency currency){
         try(Connection connection = connectionBuilder.getConnection()) {
             PreparedStatement preparedStatement =
                     connection.prepareStatement("INSERT INTO Currency(Code,FullName,Sign) values (?,?,?)");
@@ -56,7 +58,7 @@ public class CurrencyDAO extends BaseDAO implements CRUD<Currency> {
 
 
     @Override
-    public void update(int id, Currency currency) {
+    public void update(int id, Currency currency){
         try(Connection connection = connectionBuilder.getConnection()){
             PreparedStatement preparedStatement =
                     connection.prepareStatement("UPDATE Currency SET Code = ?, FullName = ?, Sign = ? where id = ?");
@@ -73,7 +75,7 @@ public class CurrencyDAO extends BaseDAO implements CRUD<Currency> {
 
 
     @Override
-    public void delete(int id) {
+    public void delete(int id){
         try(Connection connection = connectionBuilder.getConnection()) {
             connection.createStatement().execute("PRAGMA foreign_keys=ON");
             PreparedStatement preparedStatement =  connection.prepareStatement("DELETE FROM Currency WHERE id=?");
@@ -81,24 +83,30 @@ public class CurrencyDAO extends BaseDAO implements CRUD<Currency> {
             preparedStatement.setInt(1, id);
 
             preparedStatement.executeUpdate();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
 
     }
 
-    public void delete(String code) throws SQLException {
+    public void delete(String code){
         try(Connection connection = connectionBuilder.getConnection()) {
-            connection.createStatement().execute("PRAGMA foreign_keys=ON");
+            try {
+                connection.createStatement().execute("PRAGMA foreign_keys=ON");
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
             PreparedStatement preparedStatement =  connection.prepareStatement("DELETE FROM Currency WHERE code = ?");
 
             preparedStatement.setString(1, code);
 
             preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    private Optional<Currency> fetchCurrency(String query, String parameter) throws SQLException {
+    private Optional<Currency> fetchCurrency(String query, String parameter){
         Currency currency;
         try (Connection connection = connectionBuilder.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -108,6 +116,8 @@ public class CurrencyDAO extends BaseDAO implements CRUD<Currency> {
                 currency = CurrencyResultSetMapper.toCurrency(resultSet);
                 return Optional.of(currency);
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return Optional.empty();
     }

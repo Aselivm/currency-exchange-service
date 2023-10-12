@@ -2,7 +2,6 @@ package org.primshits.currency_exchange.controller;
 
 import org.primshits.currency_exchange.converter.CurrencyConverter;
 import org.primshits.currency_exchange.dto.CurrencyDTO;
-import org.primshits.currency_exchange.exceptions.DatabaseException;
 import org.primshits.currency_exchange.models.Currency;
 import org.primshits.currency_exchange.dto.response.ErrorResponse;
 
@@ -25,6 +24,7 @@ public class Currencies extends BaseServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws  IOException {
+        //TODO put isUnique here
         String name = req.getParameter("name");
         String code = req.getParameter("code");
         String sign = req.getParameter("sign");
@@ -36,23 +36,15 @@ public class Currencies extends BaseServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        try{
 
             List<Currency> currencyList = currencyService.getAll();
             resp.setStatus(HttpServletResponse.SC_OK);
             objectMapper.writeValue(resp.getOutputStream(),currencyList);
 
-        }catch (DatabaseException e){
 
-            resp.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
-            objectMapper.writeValue(resp.getOutputStream(), new ErrorResponse(e.getMessage()));
 
-        }catch (Exception e){
 
-            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            objectMapper.writeValue(resp.getOutputStream(), new ErrorResponse(e.getMessage()));
 
-        }
     }
 
 }

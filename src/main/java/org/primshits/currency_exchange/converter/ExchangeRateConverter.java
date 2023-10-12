@@ -1,17 +1,18 @@
 package org.primshits.currency_exchange.converter;
 
-import org.primshits.currency_exchange.dto.ExchangeRate;
+import org.primshits.currency_exchange.dto.ExchangeRateDTO;
 import org.primshits.currency_exchange.models.Currency;
+import org.primshits.currency_exchange.models.ExchangeRate;
 import org.primshits.currency_exchange.service.CurrencyService;
 
-public class ExchangeRateConverter implements Converter<ExchangeRate, org.primshits.currency_exchange.models.ExchangeRate> {
+public class ExchangeRateConverter implements Converter<ExchangeRateDTO, org.primshits.currency_exchange.models.ExchangeRate> {
     private final CurrencyService currencyService;
     public ExchangeRateConverter() {
         this.currencyService = new CurrencyService();
     }
 
     @Override
-    public org.primshits.currency_exchange.models.ExchangeRate convert(ExchangeRate source) {
+    public org.primshits.currency_exchange.models.ExchangeRate convert(ExchangeRateDTO source) {
         org.primshits.currency_exchange.models.ExchangeRate exchangeRate = new org.primshits.currency_exchange.models.ExchangeRate();
         Currency baseCurrency = currencyService.get(source.getBaseCurrencyCode());
         Currency targetCurrency = currencyService.get(source.getTargetCurrencyCode());
@@ -21,21 +22,11 @@ public class ExchangeRateConverter implements Converter<ExchangeRate, org.primsh
         return exchangeRate;
     }
 
-    public ExchangeRate putToDTO(String baseCurrencyCode, String targetCurrencyCode, double rate) {
-        ExchangeRate exchangeRate = new ExchangeRate();
-        exchangeRate.setBaseCurrencyCode(baseCurrencyCode);
-        exchangeRate.setTargetCurrencyCode(targetCurrencyCode);
-        exchangeRate.setRate(rate);
-        return exchangeRate;
-    }
-
-    public org.primshits.currency_exchange.models.ExchangeRate sameCurrencyExchangeRateModelByCode(String code){
-        Currency currency = currencyService.get(code);
-        org.primshits.currency_exchange.models.ExchangeRate exchangeRate = new org.primshits.currency_exchange.models.ExchangeRate();
-        exchangeRate.setId(0);
-        exchangeRate.setBaseCurrency(currency);
-        exchangeRate.setTargetCurrency(currency);
-        exchangeRate.setRate(1);
-        return exchangeRate;
+    public ExchangeRateDTO putToDTO(String baseCurrencyCode, String targetCurrencyCode, double rate) {
+        ExchangeRateDTO exchangeRateDTO = new ExchangeRateDTO();
+        exchangeRateDTO.setBaseCurrencyCode(baseCurrencyCode);
+        exchangeRateDTO.setTargetCurrencyCode(targetCurrencyCode);
+        exchangeRateDTO.setRate(rate);
+        return exchangeRateDTO;
     }
 }

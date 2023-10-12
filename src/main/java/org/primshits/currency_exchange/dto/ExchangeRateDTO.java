@@ -5,7 +5,7 @@ import lombok.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ExchangeRate {
+public class ExchangeRateDTO {
     private String baseCurrencyCode;
     private String targetCurrencyCode;
     private double rate;
