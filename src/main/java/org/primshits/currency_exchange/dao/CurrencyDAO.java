@@ -1,5 +1,6 @@
 package org.primshits.currency_exchange.dao;
 
+import org.primshits.currency_exchange.exceptions.DatabaseException;
 import org.primshits.currency_exchange.mapper.CurrencyResultSetMapper;
 import org.primshits.currency_exchange.models.Currency;
 
@@ -25,7 +26,8 @@ public class CurrencyDAO extends BaseDAO implements CRUD<Currency> {
                 currencies.add(currency);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            throw new DatabaseException();
         }
 
         return currencies;
@@ -52,7 +54,8 @@ public class CurrencyDAO extends BaseDAO implements CRUD<Currency> {
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            throw new DatabaseException();
         }
     }
 
@@ -69,7 +72,8 @@ public class CurrencyDAO extends BaseDAO implements CRUD<Currency> {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            throw new DatabaseException();
         }
     }
 
@@ -84,7 +88,8 @@ public class CurrencyDAO extends BaseDAO implements CRUD<Currency> {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            throw new DatabaseException();
         }
 
     }
@@ -94,7 +99,7 @@ public class CurrencyDAO extends BaseDAO implements CRUD<Currency> {
             try {
                 connection.createStatement().execute("PRAGMA foreign_keys=ON");
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                throw new DatabaseException();
             }
             PreparedStatement preparedStatement =  connection.prepareStatement("DELETE FROM Currency WHERE code = ?");
 
@@ -102,7 +107,8 @@ public class CurrencyDAO extends BaseDAO implements CRUD<Currency> {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            throw new DatabaseException();
         }
     }
 
@@ -117,7 +123,8 @@ public class CurrencyDAO extends BaseDAO implements CRUD<Currency> {
                 return Optional.of(currency);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            throw new DatabaseException();
         }
         return Optional.empty();
     }

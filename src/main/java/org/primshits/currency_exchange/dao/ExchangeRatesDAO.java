@@ -1,5 +1,6 @@
 package org.primshits.currency_exchange.dao;
 
+import org.primshits.currency_exchange.exceptions.DatabaseException;
 import org.primshits.currency_exchange.mapper.CurrencyResultSetMapper;
 import org.primshits.currency_exchange.mapper.ExchangeRateResultSetMapper;
 import org.primshits.currency_exchange.models.ExchangeRate;
@@ -30,7 +31,8 @@ public class ExchangeRatesDAO extends BaseDAO implements CRUD<ExchangeRate> {
                 exchangeRateList.add(exchangeRate);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            throw new DatabaseException();
         }
 
         return exchangeRateList;
@@ -56,7 +58,8 @@ public class ExchangeRatesDAO extends BaseDAO implements CRUD<ExchangeRate> {
             exchangeRate = ExchangeRateResultSetMapper.toExchangeRate(resultSet);
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            throw new DatabaseException();
         }
         return Optional.of(exchangeRate);
     }
@@ -82,7 +85,8 @@ public class ExchangeRatesDAO extends BaseDAO implements CRUD<ExchangeRate> {
 
             return Optional.empty();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            throw new DatabaseException();
         }
     }
 
@@ -119,7 +123,8 @@ public class ExchangeRatesDAO extends BaseDAO implements CRUD<ExchangeRate> {
             exchangeRate.setRate(rate);
             return Optional.of(exchangeRate);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            throw new DatabaseException();
         }
 
     }
@@ -145,7 +150,8 @@ public class ExchangeRatesDAO extends BaseDAO implements CRUD<ExchangeRate> {
 
             return Optional.empty();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            throw new DatabaseException();
         }
     }
 
@@ -162,7 +168,8 @@ public class ExchangeRatesDAO extends BaseDAO implements CRUD<ExchangeRate> {
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            throw new DatabaseException();
         }
     }
 
@@ -189,7 +196,8 @@ public class ExchangeRatesDAO extends BaseDAO implements CRUD<ExchangeRate> {
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            throw new DatabaseException();
         }
     }
 
@@ -202,7 +210,8 @@ public class ExchangeRatesDAO extends BaseDAO implements CRUD<ExchangeRate> {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            throw new DatabaseException();
         }
     }
 

@@ -1,9 +1,13 @@
 package org.primshits.currency_exchange.controller;
 
 import org.primshits.currency_exchange.dto.response.ErrorResponse;
+import org.primshits.currency_exchange.exceptions.ApplicationException;
+import org.primshits.currency_exchange.exceptions.ErrorMessage;
+import org.primshits.currency_exchange.exceptions.ExceptionHandler;
 import org.primshits.currency_exchange.models.Currency;
 import org.primshits.currency_exchange.util.CurrencyUtils;
 import org.primshits.currency_exchange.util.InputStringUtils;
+import org.primshits.currency_exchange.util.ValidationUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,14 +19,15 @@ import java.io.IOException;
 public class CurrencyPage extends BaseServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String currencyCode = InputStringUtils.parsePathInfo(req); //TODO в утил
-        if(currencyCode.length()!=3){
-            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            objectMapper.writeValue(resp.getOutputStream(),new ErrorResponse("Bad currency code request"));
+        String currencyCode = InputStringUtils.parsePathInfo(req);
+        try{
+            ValidationUtils.validateCurrency(currencyCode);
+            Currency currency = currencyService.get(currencyCode);
+            resp.setStatus(HttpServletResponse.SC_OK);
+            objectMapper.writeValue(resp.getOutputStream(),currency);
+        }catch (ApplicationException e){
+            ExceptionHandler.handle(resp,e);
         }
-        Currency currency = currencyService.get(currencyCode);
-        resp.setStatus(HttpServletResponse.SC_OK);
-        objectMapper.writeValue(resp.getOutputStream(),currency);
     }
 
 }

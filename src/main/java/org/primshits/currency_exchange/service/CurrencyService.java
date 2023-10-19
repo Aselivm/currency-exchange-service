@@ -48,14 +48,14 @@ public class CurrencyService {
         if (currency.isEmpty()) {
             throw new NotFoundException("Currency not found");
         }
-        return currency.orElseThrow(() -> new ApplicationException(ExceptionError.CURRENCY_NOT_FOUND));
+        return currency.orElseThrow(() -> new ApplicationException(ErrorMessage.CURRENCY_NOT_FOUND));
     }
 
     public void save(Currency currency){
         if (CurrencyUtils.isUnique(currency.getCode())) {
             currencyDAO.save(currency);
         }
-        throw new ApplicationException(ExceptionError.CURRENCY_ALREADY_EXISTS);
+        throw new ApplicationException(ErrorMessage.CURRENCY_ALREADY_EXISTS);
     }
 
     public void updateAmount(int id, Currency currency){

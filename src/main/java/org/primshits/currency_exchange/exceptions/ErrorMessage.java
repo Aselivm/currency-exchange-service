@@ -7,8 +7,9 @@ import javax.servlet.http.HttpServletResponse;
 
 @AllArgsConstructor
 @Getter
-public enum ExceptionError {
+public enum ErrorMessage {
     INTERNAL_DATABASE_ERROR("Internal database error",HttpServletResponse.SC_INTERNAL_SERVER_ERROR),
+    INTERNAL_ERROR("Internal error",HttpServletResponse.SC_INTERNAL_SERVER_ERROR),
 
     CURRENCY_ALREADY_EXISTS("Currency with this code already exists", HttpServletResponse.SC_CONFLICT),
     CURRENCY_NOT_FOUND("Currency not found", HttpServletResponse.SC_NOT_FOUND),
@@ -19,6 +20,7 @@ public enum ExceptionError {
     EXCHANGE_RATE_NOT_FOUND("Exchange rate with this currency codes is not found", HttpServletResponse.SC_NOT_FOUND),
     INVALID_EXCHANGE_RATE_INPUT("Exchange rate form is filled out incorrectly", HttpServletResponse.SC_BAD_REQUEST),
     INVALID_EXCHANGE_AMOUNT_INPUT("Bad exchange amount", HttpServletResponse.SC_BAD_REQUEST);
+
 
 
     private final String message;
