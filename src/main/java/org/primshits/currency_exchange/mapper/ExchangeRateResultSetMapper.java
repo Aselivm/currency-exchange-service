@@ -10,10 +10,10 @@ public class ExchangeRateResultSetMapper extends ResultSetMapper {
     public static ExchangeRate toExchangeRate(ResultSet resultSet){
         try {
             ExchangeRate exchangeRate = new ExchangeRate();
-            Currency baseCurrency = CurrencyResultSetMapper.toCurrency("B",resultSet);
-            Currency targetCurrency = CurrencyResultSetMapper.toCurrency("T",resultSet);
+            Currency baseCurrency = CurrencyResultSetMapper.toCurrency("base",resultSet);
+            Currency targetCurrency = CurrencyResultSetMapper.toCurrency("target",resultSet);
 
-            exchangeRate.setId(resultSet.getInt("ExchangeRate.ID"));
+            exchangeRate.setId(resultSet.getInt("ID"));
             exchangeRate.setBaseCurrency(baseCurrency);
             exchangeRate.setTargetCurrency(targetCurrency);
             exchangeRate.setRate(resultSet.getDouble("Rate"));

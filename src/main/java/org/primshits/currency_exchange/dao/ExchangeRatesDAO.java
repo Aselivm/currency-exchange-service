@@ -2,7 +2,6 @@ package org.primshits.currency_exchange.dao;
 
 import org.primshits.currency_exchange.mapper.CurrencyResultSetMapper;
 import org.primshits.currency_exchange.mapper.ExchangeRateResultSetMapper;
-import org.primshits.currency_exchange.models.Currency;
 import org.primshits.currency_exchange.models.ExchangeRate;
 
 import java.sql.*;
@@ -18,10 +17,13 @@ public class ExchangeRatesDAO extends BaseDAO implements CRUD<ExchangeRate> {
         List<ExchangeRate> exchangeRateList = new LinkedList<>();
         try(Connection connection = connectionBuilder.getConnection()) {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from ExchangeRate " +
+            ResultSet resultSet = statement.executeQuery("select " +
+                    "ExchangeRate.ID, ExchangeRate.Rate, B.ID as baseID," +
+                    "B.Code as baseCode,B.FullName as baseFullName,B.Sign as baseSign," +
+                    "T.ID as targetID,T.Code as targetCode,T.FullName as targetFullName,T.Sign as targetSign " +
+                    " from ExchangeRate " +
                     "join Currency B on ExchangeRate.BaseCurrencyId = B.ID " +
-                    "join Currency T on ExchangeRate.TargetCurrencyId = T.ID " +
-                    "where ExchangeRate.ID = ?");
+                    "join Currency T on ExchangeRate.TargetCurrencyId = T.ID ");
 
             while(resultSet.next()){
                 ExchangeRate exchangeRate = ExchangeRateResultSetMapper.toExchangeRate(resultSet);
@@ -39,7 +41,11 @@ public class ExchangeRatesDAO extends BaseDAO implements CRUD<ExchangeRate> {
         ExchangeRate exchangeRate;
         try(Connection connection = connectionBuilder.getConnection()) {
             PreparedStatement preparedStatement =
-                    connection.prepareStatement("select * from ExchangeRate " +
+                    connection.prepareStatement("select " +
+                            "ExchangeRate.ID, ExchangeRate.Rate, B.ID as baseID," +
+                            "B.Code as baseCode,B.FullName as baseFullName,B.Sign as baseSign," +
+                            "T.ID as targetID,T.Code as targetCode,T.FullName as targetFullName,T.Sign as targetSign " +
+                            " from ExchangeRate " +
                             "join Currency B on ExchangeRate.BaseCurrencyId = B.ID " +
                             "join Currency T on ExchangeRate.TargetCurrencyId = T.ID " +
                             "where ExchangeRate.ID = ?");
@@ -54,10 +60,15 @@ public class ExchangeRatesDAO extends BaseDAO implements CRUD<ExchangeRate> {
         }
         return Optional.of(exchangeRate);
     }
+
     public Optional<ExchangeRate> show(int baseCurrencyId, int targetCurrencyId){
         try(Connection connection = connectionBuilder.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(
-                    "select * from ExchangeRate " +
+                    "select " +
+                            "ExchangeRate.ID, ExchangeRate.Rate, B.ID as baseID," +
+                            "B.Code as baseCode,B.FullName as baseFullName,B.Sign as baseSign," +
+                            "T.ID as targetID,T.Code as targetCode,T.FullName as targetFullName,T.Sign as targetSign " +
+                            " from ExchangeRate " +
                             "join Currency B on ExchangeRate.BaseCurrencyId = B.ID " +
                             "join Currency T on ExchangeRate.TargetCurrencyId = T.ID " +
                             "WHERE B.ID = ? AND T.ID = ?");
@@ -69,7 +80,7 @@ public class ExchangeRatesDAO extends BaseDAO implements CRUD<ExchangeRate> {
                 return Optional.of(ExchangeRateResultSetMapper.toExchangeRate(resultSet));
             }
 
-            return null;
+            return Optional.empty();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -77,10 +88,13 @@ public class ExchangeRatesDAO extends BaseDAO implements CRUD<ExchangeRate> {
 
     public Optional<ExchangeRate> showWithUSDBaseByCode(String baseCurrencyCode, String targetCurrencyCode){
         ExchangeRate exchangeRate = new ExchangeRate();
-        //TODO
         try(Connection connection = connectionBuilder.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(
-                    "select * from ExchangeRate " +
+                    "select " +
+                            "ExchangeRate.ID, ExchangeRate.Rate, B.ID as baseID," +
+                            "B.Code as baseCode,B.FullName as baseFullName,B.Sign as baseSign," +
+                            "T.ID as targetID,T.Code as targetCode,T.FullName as targetFullName,T.Sign as targetSign " +
+                            " from ExchangeRate " +
                             "join Currency B on ExchangeRate.BaseCurrencyId = B.ID " +
                             "join Currency T on ExchangeRate.TargetCurrencyId = T.ID " +
                             "WHERE B.Code = 'USD' AND T.Code = ? " +
@@ -113,7 +127,11 @@ public class ExchangeRatesDAO extends BaseDAO implements CRUD<ExchangeRate> {
     public Optional<ExchangeRate> show(String baseCurrencyCode, String targetCurrencyCode){
         try(Connection connection = connectionBuilder.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(
-                    "select * from ExchangeRate " +
+                    "select " +
+                            "ExchangeRate.ID, ExchangeRate.Rate, B.ID as baseID," +
+                            "B.Code as baseCode,B.FullName as baseFullName,B.Sign as baseSign," +
+                            "T.ID as targetID,T.Code as targetCode,T.FullName as targetFullName,T.Sign as targetSign " +
+                            " from ExchangeRate " +
                             "join Currency B on ExchangeRate.BaseCurrencyId = B.ID " +
                             "join Currency T on ExchangeRate.TargetCurrencyId = T.ID " +
                             "WHERE B.Code = ? AND T.Code = ?");
@@ -125,7 +143,7 @@ public class ExchangeRatesDAO extends BaseDAO implements CRUD<ExchangeRate> {
                 return Optional.of(ExchangeRateResultSetMapper.toExchangeRate(resultSet));
             }
 
-            return null;
+            return Optional.empty();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

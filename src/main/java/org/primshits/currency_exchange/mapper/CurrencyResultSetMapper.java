@@ -18,14 +18,13 @@ public class CurrencyResultSetMapper extends ResultSetMapper {
         }
     }
 
-    public static Currency toCurrency(String alias,ResultSet resultSet){
-        //TODO B.ID not exist =)
+    public static Currency toCurrency(String prefix,ResultSet resultSet){
         try {
             return new Currency(
-                    resultSet.getInt(alias+".ID"),
-                    resultSet.getString(alias+".Code"),
-                    resultSet.getString(alias+".FullName"),
-                    resultSet.getString(alias+".Sign"));
+                    resultSet.getInt(prefix+"ID"),
+                    resultSet.getString(prefix+"Code"),
+                    resultSet.getString(prefix+"FullName"),
+                    resultSet.getString(prefix+"Sign"));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

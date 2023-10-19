@@ -3,7 +3,6 @@ package org.primshits.currency_exchange.controller;
 import org.primshits.currency_exchange.converter.CurrencyConverter;
 import org.primshits.currency_exchange.dto.CurrencyDTO;
 import org.primshits.currency_exchange.models.Currency;
-import org.primshits.currency_exchange.dto.response.ErrorResponse;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
