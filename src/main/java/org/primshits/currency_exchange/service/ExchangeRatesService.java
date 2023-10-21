@@ -1,9 +1,14 @@
 package org.primshits.currency_exchange.service;
 
 import org.primshits.currency_exchange.dao.ExchangeRatesDAO;
+import org.primshits.currency_exchange.dto.ExchangeRateDTO;
+import org.primshits.currency_exchange.exceptions.ApplicationException;
+import org.primshits.currency_exchange.exceptions.ErrorMessage;
 import org.primshits.currency_exchange.exceptions.NotFoundException;
 import org.primshits.currency_exchange.models.Currency;
 import org.primshits.currency_exchange.models.ExchangeRate;
+import org.primshits.currency_exchange.util.ExchangeRateUtils;
+import org.primshits.currency_exchange.util.ValidationUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,49 +16,50 @@ import java.util.Optional;
 public class ExchangeRatesService {
 
     private final ExchangeRatesDAO exchangeRatesDAO;
+    private final CurrencyService currencyService;
 
     public ExchangeRatesService() {
         exchangeRatesDAO = new ExchangeRatesDAO();
+        currencyService = new CurrencyService();
     }
 
     public List<ExchangeRate> getAll() {
-        return exchangeRatesDAO.index();
+        List<ExchangeRate> exchangeRates = exchangeRatesDAO.index();
+        if(exchangeRates==null) throw new ApplicationException(ErrorMessage.INTERNAL_DATABASE_ERROR);
+        return exchangeRates;
     }
 
     public ExchangeRate get(int id) {
-        Optional<ExchangeRate> exchangeRate;
-        exchangeRate = exchangeRatesDAO.show(id);
-        if (exchangeRate.isPresent()) {
-            return exchangeRate.get();
-        }
-        throw new NotFoundException("No such currency have found");
+        return exchangeRatesDAO.show(id).orElseThrow(()->new ApplicationException(ErrorMessage.EXCHANGE_RATE_NOT_FOUND));
     }
 
     public ExchangeRate get(String baseCurrencyCode, String targetCurrencyCode) {
-        Optional<ExchangeRate> exchangeRate;
-        exchangeRate = exchangeRatesDAO.show(baseCurrencyCode, targetCurrencyCode);
 
-        if (exchangeRate.isPresent()) {
-            return exchangeRate.get();
-        }
+        if (baseCurrencyCode.equals(targetCurrencyCode)) return sameCurrencyExchangeRateModelByCode(baseCurrencyCode);
 
-        exchangeRate = calculateExchangeRate(baseCurrencyCode, targetCurrencyCode);
+        Optional<ExchangeRate> exchangeRate = exchangeRatesDAO.show(baseCurrencyCode, targetCurrencyCode);
+        return exchangeRate
+                .orElse(calculateExchangeRate(baseCurrencyCode,targetCurrencyCode)
+                        .orElseThrow(()->new ApplicationException(ErrorMessage.EXCHANGE_RATE_NOT_FOUND)
+                        ));
 
-        if (exchangeRate.isPresent()) {
-            return exchangeRate.get();
-        }
-        throw new NotFoundException("No such currency have found");
     }
 
     public void save(ExchangeRate exchangeRate) {
+        if(!ExchangeRateUtils.isUnique(exchangeRate.getBaseCurrency().getCode(),exchangeRate.getTargetCurrency().getCode())){
+            throw new ApplicationException(ErrorMessage.EXCHANGE_RATE_ALREADY_EXISTS);
+        }
         exchangeRatesDAO.save(exchangeRate);
     }
 
-    //TODO update only amount
     public void updateRate(String baseCurrencyCode,String targetCurrencyCode, double amount) {
+        if(exchangeRatesDAO.show(baseCurrencyCode,targetCurrencyCode).isEmpty()){
+            throw new ApplicationException(ErrorMessage.EXCHANGE_RATE_NOT_FOUND);
+        }
         exchangeRatesDAO.updateRate(baseCurrencyCode,targetCurrencyCode,amount);
     }
 
+    @Deprecated
     public void delete(int id) throws NotFoundException {
         exchangeRatesDAO.delete(id);
     }
@@ -61,12 +67,33 @@ public class ExchangeRatesService {
     public ExchangeRate getExchangeRateFromCurrencyPair(String pair) {
         String baseCurrencyCode = pair.substring(0, 3);
         String targetCurrencyCode = pair.substring(3);
-        if (baseCurrencyCode.equals(targetCurrencyCode)) return sameCurrencyExchangeRateModelByCode(baseCurrencyCode);
         return get(baseCurrencyCode, targetCurrencyCode);
     }
 
+    public ExchangeRate convert(ExchangeRateDTO source) {
+        ExchangeRate exchangeRate = new ExchangeRate();
+        Currency baseCurrency = currencyService.get(source.getBaseCurrencyCode());
+        Currency targetCurrency = currencyService.get(source.getTargetCurrencyCode());
+        exchangeRate.setBaseCurrency(baseCurrency);
+        exchangeRate.setTargetCurrency(targetCurrency);
+        exchangeRate.setRate(source.getRate());
+        return exchangeRate;
+    }
+
+    public ExchangeRateDTO putToDTO(String baseCurrencyCode, String targetCurrencyCode, double rate) {
+        ExchangeRateDTO exchangeRateDTO = new ExchangeRateDTO();
+        exchangeRateDTO.setBaseCurrencyCode(baseCurrencyCode);
+        exchangeRateDTO.setTargetCurrencyCode(targetCurrencyCode);
+        exchangeRateDTO.setRate(rate);
+        return exchangeRateDTO;
+    }
+
+    public ExchangeRate getOrNull(String baseCurrencyCode,String targetCurrencyCode){
+        return exchangeRatesDAO.show(baseCurrencyCode,targetCurrencyCode).orElse(null);
+    }
+
     private ExchangeRate sameCurrencyExchangeRateModelByCode(String code) {
-        Currency currency = new CurrencyService().get(code);
+        Currency currency = currencyService.get(code);
         ExchangeRate exchangeRate = new ExchangeRate();
         exchangeRate.setId(0);
         exchangeRate.setBaseCurrency(currency);
@@ -76,10 +103,7 @@ public class ExchangeRatesService {
     }
 
     private Optional<ExchangeRate> calculateExchangeRate(String baseCurrencyCode, String targetCurrencyCode){
-
-        Optional<ExchangeRate> exchangeRate;
-
-        exchangeRate = exchangeRatesDAO.show(targetCurrencyCode, baseCurrencyCode);
+        Optional<ExchangeRate> exchangeRate = exchangeRatesDAO.show(targetCurrencyCode, baseCurrencyCode);
 
         if (exchangeRate.isPresent()) {
             ExchangeRate ex = exchangeRate.get();

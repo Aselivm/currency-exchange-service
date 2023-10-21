@@ -5,7 +5,6 @@ import org.primshits.currency_exchange.exceptions.ApplicationException;
 import org.primshits.currency_exchange.exceptions.ExceptionHandler;
 import org.primshits.currency_exchange.models.ExchangeRate;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
