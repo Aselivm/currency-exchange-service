@@ -11,13 +11,12 @@
 
     <plugins>
 
-
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
         <version>3.4.0</version>
         <configuration>
-          <failOnMissingWebXml>false</failOnMissingWebXml>
+          <webappDirectory>/sample/servlet/container/deploy/directory</webappDirectory>
         </configuration>
       </plugin>
 

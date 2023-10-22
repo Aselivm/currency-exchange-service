@@ -1,9 +1,11 @@
-package org.primshits.currency_exchange.controller;
+package org.primshits.currency_exchange.controller.exchange;
 
+import org.primshits.currency_exchange.controller.BaseServlet;
 import org.primshits.currency_exchange.exceptions.ApplicationException;
 import org.primshits.currency_exchange.exceptions.ExceptionHandler;
 import org.primshits.currency_exchange.models.ExchangeRate;
 import org.primshits.currency_exchange.util.InputStringUtils;
+import org.primshits.currency_exchange.util.ValidationUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,6 +19,7 @@ public class ExchangeRatePage extends BaseServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws  IOException {
         String currencyPair = InputStringUtils.parsePathInfo(req);
         try {
+            ValidationUtils.validateExchangeRate(currencyPair);
             ExchangeRate exchangeRate = exchangeRatesService.getExchangeRateFromCurrencyPair(currencyPair);
             resp.setStatus(HttpServletResponse.SC_OK);
             objectMapper.writeValue(resp.getOutputStream(), exchangeRate);
@@ -28,11 +31,14 @@ public class ExchangeRatePage extends BaseServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws  IOException {
         String currencyPair = InputStringUtils.parsePathInfo(req);
+
         String baseCurrencyCode = currencyPair.substring(0,3);
         String targetCurrencyCode = currencyPair.substring(3);
-        double rate = Double.parseDouble(req.getParameter("rate"));
+        String rate = req.getParameter("rate");
         try{
-            exchangeRatesService.updateRate(baseCurrencyCode, targetCurrencyCode, rate);
+            ValidationUtils.validateExchangeRate(baseCurrencyCode,targetCurrencyCode,rate);
+            double parsedRate = Double.parseDouble(req.getParameter("rate"));
+            exchangeRatesService.updateRate(baseCurrencyCode, targetCurrencyCode, parsedRate);
             ExchangeRate exchangeRate = exchangeRatesService.get(baseCurrencyCode,targetCurrencyCode);
             objectMapper.writeValue(resp.getOutputStream(),exchangeRate);
         }catch (ApplicationException e){

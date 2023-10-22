@@ -110,13 +110,13 @@ public class ExchangeRatesDAO extends BaseDAO implements CRUD<ExchangeRate> {
             ExchangeRate baseAndUSD;
             if (!resultSet.next()) return Optional.empty();
             exchangeRate.setBaseCurrency(
-                    CurrencyResultSetMapper.toCurrency("B",resultSet));
+                    CurrencyResultSetMapper.toCurrency("base",resultSet));
             baseAndUSD =  ExchangeRateResultSetMapper.toExchangeRate(resultSet);
 
             ExchangeRate targetAndUSD;
             if (!resultSet.next()) return Optional.empty();
             exchangeRate.setTargetCurrency(
-                    CurrencyResultSetMapper.toCurrency("T",resultSet));
+                    CurrencyResultSetMapper.toCurrency("target",resultSet));
             targetAndUSD =  ExchangeRateResultSetMapper.toExchangeRate(resultSet);
 
             double rate = baseAndUSD.getRate() / targetAndUSD.getRate();

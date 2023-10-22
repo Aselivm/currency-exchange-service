@@ -4,7 +4,6 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.primshits.currency_exchange.exceptions.ApplicationException;
 import org.primshits.currency_exchange.exceptions.ErrorMessage;
-import org.primshits.currency_exchange.models.ExchangeRate;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ValidationUtils {
@@ -22,6 +21,12 @@ public class ValidationUtils {
 
     public static void validateExchangeRate(String baseCurrencyCode,String targetCurrencyCode,String rate){
         if(InputStringUtils.isEmptyField(baseCurrencyCode,targetCurrencyCode,rate)||!ExchangeRateUtils.isValid(baseCurrencyCode,targetCurrencyCode)){
+            throw new ApplicationException(ErrorMessage.INVALID_EXCHANGE_RATE_INPUT);
+        }
+    }
+
+    public static void validateExchangeRate(String pair){
+        if(pair.length()!=6){
             throw new ApplicationException(ErrorMessage.INVALID_EXCHANGE_RATE_INPUT);
         }
     }

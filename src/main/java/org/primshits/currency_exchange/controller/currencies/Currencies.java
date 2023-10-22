@@ -1,5 +1,6 @@
-package org.primshits.currency_exchange.controller;
+package org.primshits.currency_exchange.controller.currencies;
 
+import org.primshits.currency_exchange.controller.BaseServlet;
 import org.primshits.currency_exchange.dto.CurrencyDTO;
 import org.primshits.currency_exchange.exceptions.ApplicationException;
 import org.primshits.currency_exchange.exceptions.ExceptionHandler;
