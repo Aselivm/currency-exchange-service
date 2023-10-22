@@ -3,6 +3,7 @@ package org.primshits.currency_exchange.dao;
 import org.primshits.currency_exchange.exceptions.DatabaseException;
 import org.primshits.currency_exchange.mapper.CurrencyResultSetMapper;
 import org.primshits.currency_exchange.models.Currency;
+import org.primshits.currency_exchange.models.ExchangeRate;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -10,12 +11,19 @@ import java.util.List;
 import java.util.Optional;
 
 public class CurrencyDAO extends BaseDAO implements CRUD<Currency> {
+    private final String GET_ALL = "select * from Currency";
+    private final String GET_BY_ID = "select * from Currency where id = ?";
+    private final String GET_BY_CODE = "select * from Currency where Code = ?";
+    private final String SAVE = "INSERT INTO Currency(Code,FullName,Sign) values (?,?,?)";
+    private final String UPDATE = "UPDATE Currency SET Code = ?, FullName = ?, Sign = ? where id = ?";
+    private final String DELETE_BY_ID = "DELETE FROM Currency WHERE id=?";
+    private final String DELETE_BY_CODE = "DELETE FROM Currency WHERE code = ?";
     @Override
     public List<Currency> index(){
         List<Currency> currencies = new ArrayList<>();
         try(Connection connection = connectionBuilder.getConnection()){
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from Currency");
+            ResultSet resultSet = statement.executeQuery(GET_ALL);
 
             while(resultSet.next()){
                 Currency currency = new Currency();
@@ -35,23 +43,34 @@ public class CurrencyDAO extends BaseDAO implements CRUD<Currency> {
 
     @Override
     public Optional<Currency> show(int id){
-        return fetchCurrency("select * from Currency where id = ?", String.valueOf(id));
+        try (Connection connection = connectionBuilder.getConnection()){
+            return fetchCurrency(GET_BY_ID, String.valueOf(id),connection);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DatabaseException();
+        }
     }
 
     public Optional<Currency> show(String code){
-        return fetchCurrency("select * from Currency where Code = ?", code);
+        try (Connection connection = connectionBuilder.getConnection()){
+            return fetchCurrency(GET_BY_CODE, code,connection);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DatabaseException();
+        }
     }
 
     @Override
-    public void save(Currency currency){
+    public Optional<Currency> save(Currency currency){
         try(Connection connection = connectionBuilder.getConnection()) {
             PreparedStatement preparedStatement =
-                    connection.prepareStatement("INSERT INTO Currency(Code,FullName,Sign) values (?,?,?)");
+                    connection.prepareStatement(SAVE);
             preparedStatement.setString(1,currency.getCode());
             preparedStatement.setString(2,currency.getFullName());
             preparedStatement.setString(3,currency.getSign());
 
             preparedStatement.executeUpdate();
+            return fetchCurrency(GET_BY_CODE,currency.getCode(),connection);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -64,7 +83,7 @@ public class CurrencyDAO extends BaseDAO implements CRUD<Currency> {
     public void update(int id, Currency currency){
         try(Connection connection = connectionBuilder.getConnection()){
             PreparedStatement preparedStatement =
-                    connection.prepareStatement("UPDATE Currency SET Code = ?, FullName = ?, Sign = ? where id = ?");
+                    connection.prepareStatement(UPDATE);
             preparedStatement.setString(1,currency.getCode());
             preparedStatement.setString(2,currency.getFullName());
             preparedStatement.setString(3,currency.getSign());
@@ -82,7 +101,7 @@ public class CurrencyDAO extends BaseDAO implements CRUD<Currency> {
     public void delete(int id){
         try(Connection connection = connectionBuilder.getConnection()) {
             connection.createStatement().execute("PRAGMA foreign_keys=ON");
-            PreparedStatement preparedStatement =  connection.prepareStatement("DELETE FROM Currency WHERE id=?");
+            PreparedStatement preparedStatement =  connection.prepareStatement(DELETE_BY_ID);
 
             preparedStatement.setInt(1, id);
 
@@ -101,7 +120,7 @@ public class CurrencyDAO extends BaseDAO implements CRUD<Currency> {
             } catch (SQLException e) {
                 throw new DatabaseException();
             }
-            PreparedStatement preparedStatement =  connection.prepareStatement("DELETE FROM Currency WHERE code = ?");
+            PreparedStatement preparedStatement =  connection.prepareStatement(DELETE_BY_CODE);
 
             preparedStatement.setString(1, code);
 
@@ -112,20 +131,15 @@ public class CurrencyDAO extends BaseDAO implements CRUD<Currency> {
         }
     }
 
-    private Optional<Currency> fetchCurrency(String query, String parameter){
+    private Optional<Currency> fetchCurrency(String query, String parameter,Connection connection) throws SQLException {
         Currency currency;
-        try (Connection connection = connectionBuilder.getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, parameter);
-            ResultSet resultSet = preparedStatement.executeQuery();
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, parameter);
+        ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 currency = CurrencyResultSetMapper.toCurrency(resultSet);
                 return Optional.of(currency);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new DatabaseException();
-        }
         return Optional.empty();
     }
 }

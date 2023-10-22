@@ -16,6 +16,16 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = "/exchangeRate/*")
 public class ExchangeRatePage extends BaseServlet {
+
+    @Override
+    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String method = req.getMethod();
+        if (!method.equals("PATCH")) {
+            super.service(req, resp);
+            return;
+        }
+        doPatch(req,resp);
+    }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws  IOException {
         String currencyPair = InputStringUtils.parsePathInfo(req);
@@ -29,18 +39,19 @@ public class ExchangeRatePage extends BaseServlet {
         }
     }
 
-    @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws  IOException {
+    protected void doPatch(HttpServletRequest req, HttpServletResponse resp) throws  IOException {
         String currencyPair = InputStringUtils.parsePathInfo(req);
 
         String baseCurrencyCode = currencyPair.substring(0,3);
         String targetCurrencyCode = currencyPair.substring(3);
-        String rate = req.getParameter("rate");
+
+        String bodyParams = req.getReader().readLine();
+        String firstBodyParam = bodyParams.split("&")[0];
+        String rate = firstBodyParam.replace("rate=", "");
         try{
             ValidationUtils.validateExchange(baseCurrencyCode,targetCurrencyCode,rate);
-            double parsedRate = Double.parseDouble(req.getParameter("rate"));
-            exchangeRatesService.updateRate(baseCurrencyCode, targetCurrencyCode, parsedRate);
-            ExchangeRate exchangeRate = exchangeRatesService.get(baseCurrencyCode,targetCurrencyCode);
+            double parsedRate = Double.parseDouble(rate);
+            ExchangeRate exchangeRate = exchangeRatesService.updateRate(baseCurrencyCode, targetCurrencyCode, parsedRate);
             JsonUtils.write(resp,exchangeRate);
         }catch (ApplicationException e){
             ExceptionHandler.handle(resp,e);

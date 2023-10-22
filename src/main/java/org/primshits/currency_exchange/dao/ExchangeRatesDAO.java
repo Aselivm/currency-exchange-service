@@ -12,19 +12,62 @@ import java.util.Optional;
 
 public class ExchangeRatesDAO extends BaseDAO implements CRUD<ExchangeRate> {
 
+    private final String GET_ALL = "select " +
+            "ExchangeRate.ID, ExchangeRate.Rate, B.ID as baseID," +
+            "B.Code as baseCode,B.FullName as baseFullName,B.Sign as baseSign," +
+            "T.ID as targetID,T.Code as targetCode,T.FullName as targetFullName,T.Sign as targetSign " +
+            " from ExchangeRate " +
+            "join Currency B on ExchangeRate.BaseCurrencyId = B.ID " +
+            "join Currency T on ExchangeRate.TargetCurrencyId = T.ID ";
+    private final String GET_BY_ID = "select " +
+            "ExchangeRate.ID, ExchangeRate.Rate, B.ID as baseID," +
+            "B.Code as baseCode,B.FullName as baseFullName,B.Sign as baseSign," +
+            "T.ID as targetID,T.Code as targetCode,T.FullName as targetFullName,T.Sign as targetSign " +
+            " from ExchangeRate " +
+            "join Currency B on ExchangeRate.BaseCurrencyId = B.ID " +
+            "join Currency T on ExchangeRate.TargetCurrencyId = T.ID " +
+            "where ExchangeRate.ID = ?";
+    private final String GET_BY_CURRENCY_IDS = "select " +
+            "ExchangeRate.ID, ExchangeRate.Rate, B.ID as baseID," +
+            "B.Code as baseCode,B.FullName as baseFullName,B.Sign as baseSign," +
+            "T.ID as targetID,T.Code as targetCode,T.FullName as targetFullName,T.Sign as targetSign " +
+            " from ExchangeRate " +
+            "join Currency B on ExchangeRate.BaseCurrencyId = B.ID " +
+            "join Currency T on ExchangeRate.TargetCurrencyId = T.ID " +
+            "WHERE B.ID = ? AND T.ID = ?";
+    private final String GET_BY_CURRENCY_CODES = "select " +
+            "ExchangeRate.ID, ExchangeRate.Rate, B.ID as baseID," +
+            "B.Code as baseCode,B.FullName as baseFullName,B.Sign as baseSign," +
+            "T.ID as targetID,T.Code as targetCode,T.FullName as targetFullName,T.Sign as targetSign " +
+            " from ExchangeRate " +
+            "join Currency B on ExchangeRate.BaseCurrencyId = B.ID " +
+            "join Currency T on ExchangeRate.TargetCurrencyId = T.ID " +
+            "WHERE B.Code = ? AND T.Code = ?";
+    private final String GET_CROSS_RATE_THROUGH_USD = "select " +
+            "ExchangeRate.ID, ExchangeRate.Rate, B.ID as baseID," +
+            "B.Code as baseCode,B.FullName as baseFullName,B.Sign as baseSign," +
+            "T.ID as targetID,T.Code as targetCode,T.FullName as targetFullName,T.Sign as targetSign " +
+            " from ExchangeRate " +
+            "join Currency B on ExchangeRate.BaseCurrencyId = B.ID " +
+            "join Currency T on ExchangeRate.TargetCurrencyId = T.ID " +
+            "WHERE B.Code = 'USD' AND T.Code = ? " +
+            "or B.Code = 'USD' AND T.Code = ?";
+    private final String SAVE = "INSERT INTO ExchangeRate(BaseCurrencyID,TargetCurrencyID,Rate) values (?,?,?)";
+
+    private final String UPDATE_RATE = "update ExchangeRate set Rate = ? " +
+            "where BaseCurrencyID = (SELECT (ID) FROM Currency where Code = ?)" +
+            "and TargetCurrencyID = (SELECT (ID) FROM Currency where Code = ?)" +
+            "OR BaseCurrencyID = (SELECT (ID) FROM Currency where Code = ?)" +
+            "and TargetCurrencyID = (SELECT (ID) FROM Currency where Code = ?)";
+
+    private final String DELETE_BY_ID = "DELETE FROM ExchangeRate WHERE id=?";
 
     @Override
     public List<ExchangeRate> index(){
         List<ExchangeRate> exchangeRateList = new LinkedList<>();
         try(Connection connection = connectionBuilder.getConnection()) {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select " +
-                    "ExchangeRate.ID, ExchangeRate.Rate, B.ID as baseID," +
-                    "B.Code as baseCode,B.FullName as baseFullName,B.Sign as baseSign," +
-                    "T.ID as targetID,T.Code as targetCode,T.FullName as targetFullName,T.Sign as targetSign " +
-                    " from ExchangeRate " +
-                    "join Currency B on ExchangeRate.BaseCurrencyId = B.ID " +
-                    "join Currency T on ExchangeRate.TargetCurrencyId = T.ID ");
+            ResultSet resultSet = statement.executeQuery(GET_ALL);
 
             while(resultSet.next()){
                 ExchangeRate exchangeRate = ExchangeRateResultSetMapper.toExchangeRate(resultSet);
@@ -43,14 +86,7 @@ public class ExchangeRatesDAO extends BaseDAO implements CRUD<ExchangeRate> {
         ExchangeRate exchangeRate;
         try(Connection connection = connectionBuilder.getConnection()) {
             PreparedStatement preparedStatement =
-                    connection.prepareStatement("select " +
-                            "ExchangeRate.ID, ExchangeRate.Rate, B.ID as baseID," +
-                            "B.Code as baseCode,B.FullName as baseFullName,B.Sign as baseSign," +
-                            "T.ID as targetID,T.Code as targetCode,T.FullName as targetFullName,T.Sign as targetSign " +
-                            " from ExchangeRate " +
-                            "join Currency B on ExchangeRate.BaseCurrencyId = B.ID " +
-                            "join Currency T on ExchangeRate.TargetCurrencyId = T.ID " +
-                            "where ExchangeRate.ID = ?");
+                    connection.prepareStatement(GET_BY_ID);
             preparedStatement.setInt(1,id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if(!resultSet.next()) return Optional.empty();
@@ -66,17 +102,28 @@ public class ExchangeRatesDAO extends BaseDAO implements CRUD<ExchangeRate> {
 
     public Optional<ExchangeRate> show(int baseCurrencyId, int targetCurrencyId){
         try(Connection connection = connectionBuilder.getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(
-                    "select " +
-                            "ExchangeRate.ID, ExchangeRate.Rate, B.ID as baseID," +
-                            "B.Code as baseCode,B.FullName as baseFullName,B.Sign as baseSign," +
-                            "T.ID as targetID,T.Code as targetCode,T.FullName as targetFullName,T.Sign as targetSign " +
-                            " from ExchangeRate " +
-                            "join Currency B on ExchangeRate.BaseCurrencyId = B.ID " +
-                            "join Currency T on ExchangeRate.TargetCurrencyId = T.ID " +
-                            "WHERE B.ID = ? AND T.ID = ?");
+            PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_CURRENCY_IDS);
             preparedStatement.setInt(1, baseCurrencyId);
             preparedStatement.setInt(2, targetCurrencyId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return Optional.of(ExchangeRateResultSetMapper.toExchangeRate(resultSet));
+            }
+
+            return Optional.empty();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DatabaseException();
+        }
+    }
+
+    public Optional<ExchangeRate> show(String baseCurrencyCode, String targetCurrencyCode){
+        try(Connection connection = connectionBuilder.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    GET_BY_CURRENCY_CODES);
+            preparedStatement.setString(1, baseCurrencyCode);
+            preparedStatement.setString(2, targetCurrencyCode);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
@@ -93,16 +140,7 @@ public class ExchangeRatesDAO extends BaseDAO implements CRUD<ExchangeRate> {
     public Optional<ExchangeRate> showWithUSDBaseByCode(String baseCurrencyCode, String targetCurrencyCode){
         ExchangeRate exchangeRate = new ExchangeRate();
         try(Connection connection = connectionBuilder.getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(
-                    "select " +
-                            "ExchangeRate.ID, ExchangeRate.Rate, B.ID as baseID," +
-                            "B.Code as baseCode,B.FullName as baseFullName,B.Sign as baseSign," +
-                            "T.ID as targetID,T.Code as targetCode,T.FullName as targetFullName,T.Sign as targetSign " +
-                            " from ExchangeRate " +
-                            "join Currency B on ExchangeRate.BaseCurrencyId = B.ID " +
-                            "join Currency T on ExchangeRate.TargetCurrencyId = T.ID " +
-                            "WHERE B.Code = 'USD' AND T.Code = ? " +
-                            "or B.Code = 'USD' AND T.Code = ?");
+            PreparedStatement preparedStatement = connection.prepareStatement(GET_CROSS_RATE_THROUGH_USD);
             preparedStatement.setString(1, baseCurrencyCode);
             preparedStatement.setString(2, targetCurrencyCode);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -129,44 +167,23 @@ public class ExchangeRatesDAO extends BaseDAO implements CRUD<ExchangeRate> {
 
     }
 
-    public Optional<ExchangeRate> show(String baseCurrencyCode, String targetCurrencyCode){
-        try(Connection connection = connectionBuilder.getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(
-                    "select " +
-                            "ExchangeRate.ID, ExchangeRate.Rate, B.ID as baseID," +
-                            "B.Code as baseCode,B.FullName as baseFullName,B.Sign as baseSign," +
-                            "T.ID as targetID,T.Code as targetCode,T.FullName as targetFullName,T.Sign as targetSign " +
-                            " from ExchangeRate " +
-                            "join Currency B on ExchangeRate.BaseCurrencyId = B.ID " +
-                            "join Currency T on ExchangeRate.TargetCurrencyId = T.ID " +
-                            "WHERE B.Code = ? AND T.Code = ?");
-            preparedStatement.setString(1, baseCurrencyCode);
-            preparedStatement.setString(2, targetCurrencyCode);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                return Optional.of(ExchangeRateResultSetMapper.toExchangeRate(resultSet));
-            }
-
-            return Optional.empty();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new DatabaseException();
-        }
-    }
-
     @Override
-    public void save(ExchangeRate exchangeRate){
+    public Optional<ExchangeRate> save(ExchangeRate exchangeRate){
         try(Connection connection = connectionBuilder.getConnection()){
             PreparedStatement preparedStatement =
                     connection.prepareStatement
-                            ("INSERT INTO ExchangeRate(BaseCurrency,TargetCurrency,Rate) values (?,?,?)");
+                            (SAVE);
             preparedStatement.setInt(1,exchangeRate.getBaseCurrency().getId());
             preparedStatement.setInt(2,exchangeRate.getTargetCurrency().getId());
             preparedStatement.setDouble(3,exchangeRate.getRate());
 
             preparedStatement.executeUpdate();
 
+            return
+                    getExchangeRateByCodes(
+                            exchangeRate.getBaseCurrency().getCode(),
+                            exchangeRate.getTargetCurrency().getCode(),
+                            connection);
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DatabaseException();
@@ -177,15 +194,10 @@ public class ExchangeRatesDAO extends BaseDAO implements CRUD<ExchangeRate> {
     @Deprecated
     public void update(int id, ExchangeRate exchangeRate){
     }
-
-    public void updateRate(String baseCurrencyCode,String targetCurrencyCode, double rate){
+    public Optional<ExchangeRate> updateRate(String baseCurrencyCode,String targetCurrencyCode, double rate){
         try(Connection connection = connectionBuilder.getConnection()){
             PreparedStatement preparedStatement =
-                    connection.prepareStatement("update ExchangeRate set Rate = ? " +
-                            "where BaseCurrencyID = (SELECT (ID) FROM Currency where Code = ?)" +
-                            "and TargetCurrencyID = (SELECT (ID) FROM Currency where Code = ?)" +
-                            "OR BaseCurrencyID = (SELECT (ID) FROM Currency where Code = ?)" +
-                            "and TargetCurrencyID = (SELECT (ID) FROM Currency where Code = ?)");
+                    connection.prepareStatement(UPDATE_RATE);
             preparedStatement.setDouble(1,rate);
 
             preparedStatement.setString(2,baseCurrencyCode);
@@ -195,6 +207,7 @@ public class ExchangeRatesDAO extends BaseDAO implements CRUD<ExchangeRate> {
             preparedStatement.setString(5,baseCurrencyCode);
             preparedStatement.executeUpdate();
 
+            return getExchangeRateByCodes(baseCurrencyCode,targetCurrencyCode,connection);
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DatabaseException();
@@ -204,7 +217,7 @@ public class ExchangeRatesDAO extends BaseDAO implements CRUD<ExchangeRate> {
     @Override
     public void delete(int id){
         try(Connection connection = connectionBuilder.getConnection()){
-            PreparedStatement preparedStatement =  connection.prepareStatement("DELETE FROM ExchangeRate WHERE id=?");
+            PreparedStatement preparedStatement =  connection.prepareStatement(DELETE_BY_ID);
 
             preparedStatement.setInt(1, id);
 
@@ -213,6 +226,17 @@ public class ExchangeRatesDAO extends BaseDAO implements CRUD<ExchangeRate> {
             e.printStackTrace();
             throw new DatabaseException();
         }
+    }
+
+    private Optional<ExchangeRate> getExchangeRateByCodes(String baseCurrencyCode, String targetCurrencyCode,Connection connection) throws SQLException {
+        PreparedStatement selectStatement = connection.prepareStatement(GET_BY_CURRENCY_CODES);
+        selectStatement.setString(1,baseCurrencyCode);
+        selectStatement.setString(2,targetCurrencyCode);
+        ResultSet resultSet = selectStatement.executeQuery();
+        if (resultSet.next()) {
+            return Optional.of(ExchangeRateResultSetMapper.toExchangeRate(resultSet));
+        }
+        return Optional.empty();
     }
 
 }

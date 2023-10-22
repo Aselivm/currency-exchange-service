@@ -8,6 +8,7 @@ import org.primshits.currency_exchange.models.Currency;
 import org.primshits.currency_exchange.util.CurrencyUtils;
 
 import java.util.List;
+import java.util.Optional;
 
 public class CurrencyService {
     private final CurrencyDAO currencyDAO;
@@ -37,11 +38,11 @@ public class CurrencyService {
                 .orElse(null);
     }
 
-    public void save(Currency currency){
+    public Currency save(Currency currency){
         if (!CurrencyUtils.isUnique(currency.getCode())) {
             throw new ApplicationException(ErrorMessage.CURRENCY_ALREADY_EXISTS);
         }
-        currencyDAO.save(currency);
+        return currencyDAO.save(currency).orElseThrow(()->new ApplicationException(ErrorMessage.INTERNAL_ERROR));
     }
 
     public Currency convert(CurrencyDTO source) {

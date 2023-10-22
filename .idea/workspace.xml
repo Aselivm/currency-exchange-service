@@ -9,7 +9,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="90bdadcd-ee2b-4e1a-9fa3-231aeb807c97" name="Changes" comment="add updateRate method to ExchangeRatesServiceService" />
+    <list default="true" id="90bdadcd-ee2b-4e1a-9fa3-231aeb807c97" name="Changes" comment="add updateRate method to ExchangeRatesServiceService">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sample/servlet/container/deploy/directory/WEB-INF/classes/org/primshits/currency_exchange/controller/currencies/Currencies.class" beforeDir="false" afterPath="$PROJECT_DIR$/sample/servlet/container/deploy/directory/WEB-INF/classes/org/primshits/currency_exchange/controller/currencies/Currencies.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sample/servlet/container/deploy/directory/WEB-INF/classes/org/primshits/currency_exchange/controller/exchange/ExchangeRatePage.class" beforeDir="false" afterPath="$PROJECT_DIR$/sample/servlet/container/deploy/directory/WEB-INF/classes/org/primshits/currency_exchange/controller/exchange/ExchangeRatePage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sample/servlet/container/deploy/directory/WEB-INF/classes/org/primshits/currency_exchange/controller/exchange/ExchangeRates.class" beforeDir="false" afterPath="$PROJECT_DIR$/sample/servlet/container/deploy/directory/WEB-INF/classes/org/primshits/currency_exchange/controller/exchange/ExchangeRates.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sample/servlet/container/deploy/directory/WEB-INF/classes/org/primshits/currency_exchange/dao/CRUD.class" beforeDir="false" afterPath="$PROJECT_DIR$/sample/servlet/container/deploy/directory/WEB-INF/classes/org/primshits/currency_exchange/dao/CRUD.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sample/servlet/container/deploy/directory/WEB-INF/classes/org/primshits/currency_exchange/dao/CurrencyDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/sample/servlet/container/deploy/directory/WEB-INF/classes/org/primshits/currency_exchange/dao/CurrencyDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sample/servlet/container/deploy/directory/WEB-INF/classes/org/primshits/currency_exchange/dao/ExchangeRatesDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/sample/servlet/container/deploy/directory/WEB-INF/classes/org/primshits/currency_exchange/dao/ExchangeRatesDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sample/servlet/container/deploy/directory/WEB-INF/classes/org/primshits/currency_exchange/service/CurrencyService.class" beforeDir="false" afterPath="$PROJECT_DIR$/sample/servlet/container/deploy/directory/WEB-INF/classes/org/primshits/currency_exchange/service/CurrencyService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sample/servlet/container/deploy/directory/WEB-INF/classes/org/primshits/currency_exchange/service/ExchangeRatesService.class" beforeDir="false" afterPath="$PROJECT_DIR$/sample/servlet/container/deploy/directory/WEB-INF/classes/org/primshits/currency_exchange/service/ExchangeRatesService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/primshits/currency_exchange/controller/currencies/Currencies.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/primshits/currency_exchange/controller/currencies/Currencies.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/primshits/currency_exchange/controller/exchange/ExchangeRatePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/primshits/currency_exchange/controller/exchange/ExchangeRatePage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/primshits/currency_exchange/controller/exchange/ExchangeRates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/primshits/currency_exchange/controller/exchange/ExchangeRates.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/primshits/currency_exchange/dao/CRUD.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/primshits/currency_exchange/dao/CRUD.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/primshits/currency_exchange/dao/CurrencyDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/primshits/currency_exchange/dao/CurrencyDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/primshits/currency_exchange/dao/ExchangeRatesDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/primshits/currency_exchange/dao/ExchangeRatesDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/primshits/currency_exchange/service/CurrencyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/primshits/currency_exchange/service/CurrencyService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/primshits/currency_exchange/service/ExchangeRatesService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/primshits/currency_exchange/service/ExchangeRatesService.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -48,7 +69,7 @@
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
-        <option name="mavenHome" value="$PROJECT_DIR$/../../../java_projects/tools/apache-maven-3.8.6" />
+        <option name="useMavenConfig" value="true" />
       </MavenGeneralSettings>
     </option>
   </component>
@@ -88,8 +109,9 @@
       &quot;directory&quot;
     ],
     &quot;DatabaseDriversLRU&quot;: [
-      &quot;sqlite&quot;,
-      &quot;mysql&quot;
+      &quot;mysql&quot;,
+      &quot;postgresql&quot;,
+      &quot;sqlite&quot;
     ]
   }
 }</component>
@@ -170,20 +192,6 @@
         <option name="BuildArtifacts" enabled="true">
           <artifact name="CurrencyExchange:war exploded" />
         </option>
-      </method>
-    </configuration>
-    <configuration default="true" type="JBossConfiguration" factoryName="Local" ALTERNATIVE_JRE_ENABLED="false">
-      <deployment />
-      <server-settings>
-        <option name="SERVER" value="" />
-        <option name="BINDING_SET_NAME" value="" />
-        <option name="DOMAIN" value="false" />
-        <option name="SERVER_GROUP" value="" />
-        <option name="USERNAME" value="" />
-      </server-settings>
-      <predefined_log_file enabled="true" id="JBoss" />
-      <method v="2">
-        <option name="Make" enabled="true" />
       </method>
     </configuration>
     <configuration name="CurrencyExchange [jetty:run]" type="MavenRunConfiguration" factoryName="Maven" temporary="true">
@@ -296,6 +304,18 @@
         <option name="BuildArtifacts" enabled="true">
           <artifact name="CurrencyExchange:war exploded" />
         </option>
+      </method>
+    </configuration>
+    <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" ALTERNATIVE_JRE_ENABLED="false">
+      <deployment />
+      <server-settings />
+      <predefined_log_file enabled="true" id="Tomcat" />
+      <predefined_log_file enabled="true" id="Tomcat Catalina" />
+      <predefined_log_file id="Tomcat Manager" />
+      <predefined_log_file id="Tomcat Host Manager" />
+      <predefined_log_file id="Tomcat Localhost Access" />
+      <method v="2">
+        <option name="Make" enabled="true" />
       </method>
     </configuration>
     <configuration name="apache-tomcat-8.5.93" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="apache-tomcat-8.5.93" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="19" nameIsGenerated="true">
@@ -477,7 +497,10 @@
       <workItem from="1697744714248" duration="3545000" />
       <workItem from="1697835203986" duration="1101000" />
       <workItem from="1697913674727" duration="8154000" />
-      <workItem from="1697957717111" duration="2638000" />
+      <workItem from="1697957717111" duration="3316000" />
+      <workItem from="1697962161349" duration="797000" />
+      <workItem from="1697962970223" duration="8055000" />
+      <workItem from="1697980828711" duration="1979000" />
     </task>
     <task id="LOCAL-00001" summary="Before web.xml deleted">
       <created>1694116522823</created>
@@ -645,9 +668,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/primshits/currency_exchange/controller/exchange/ExchangeRatePage.java</url>
-          <line>36</line>
-          <option name="timeStamp" value="1" />
+          <url>file://$PROJECT_DIR$/src/main/java/org/primshits/currency_exchange/controller/exchange/ExchangeRates.java</url>
+          <line>27</line>
+          <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

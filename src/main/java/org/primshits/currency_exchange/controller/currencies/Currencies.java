@@ -30,9 +30,9 @@ public class Currencies extends BaseServlet {
         try {
             ValidationUtils.validateCurrency(name,code,sign);
             CurrencyDTO currencyDTO = currencyService.putToDTO(name, code, sign);
-            currencyService.save(currencyService.convert(currencyDTO));
+            Currency currency = currencyService.save(currencyService.convert(currencyDTO));
             resp.setStatus(HttpServletResponse.SC_OK);
-            JsonUtils.write(resp,currencyService.get(code));
+            JsonUtils.write(resp,currency);
         }catch (ApplicationException e){
             ExceptionHandler.handle(resp,e);
         }

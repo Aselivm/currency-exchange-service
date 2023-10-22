@@ -30,31 +30,31 @@ public class ExchangeRatesService {
     public ExchangeRate get(int id) {
         return exchangeRatesDAO.show(id).orElseThrow(()->new ApplicationException(ErrorMessage.EXCHANGE_RATE_NOT_FOUND));
     }
-
     public ExchangeRate get(String baseCurrencyCode, String targetCurrencyCode) {
 
         if (baseCurrencyCode.equals(targetCurrencyCode)) return sameCurrencyExchangeRateModelByCode(baseCurrencyCode);
 
         Optional<ExchangeRate> exchangeRate = exchangeRatesDAO.show(baseCurrencyCode, targetCurrencyCode);
-        return exchangeRate
-                .orElse(calculateExchangeRate(baseCurrencyCode,targetCurrencyCode)
-                        .orElseThrow(()->new ApplicationException(ErrorMessage.EXCHANGE_RATE_NOT_FOUND)
-                        ));
-
+        if(exchangeRate.isPresent()){
+            return exchangeRate.get();
+        }
+        exchangeRate = calculateExchangeRate(baseCurrencyCode,targetCurrencyCode);
+        return exchangeRate.orElseThrow(()->new ApplicationException(ErrorMessage.EXCHANGE_RATE_NOT_FOUND));
     }
 
-    public void save(ExchangeRate exchangeRate) {
+    public ExchangeRate save(ExchangeRate exchangeRate) {
         if(!ExchangeRateUtils.isUnique(exchangeRate.getBaseCurrency().getCode(),exchangeRate.getTargetCurrency().getCode())){
             throw new ApplicationException(ErrorMessage.EXCHANGE_RATE_ALREADY_EXISTS);
         }
-        exchangeRatesDAO.save(exchangeRate);
+        return exchangeRatesDAO.save(exchangeRate).orElseThrow(()->new ApplicationException(ErrorMessage.INTERNAL_ERROR));
     }
 
-    public void updateRate(String baseCurrencyCode,String targetCurrencyCode, double amount) {
+    public ExchangeRate updateRate(String baseCurrencyCode,String targetCurrencyCode, double amount) {
         if(exchangeRatesDAO.show(baseCurrencyCode,targetCurrencyCode).isEmpty()){
             throw new ApplicationException(ErrorMessage.EXCHANGE_RATE_NOT_FOUND);
         }
-        exchangeRatesDAO.updateRate(baseCurrencyCode,targetCurrencyCode,amount);
+        return exchangeRatesDAO.updateRate(baseCurrencyCode,targetCurrencyCode,amount)
+                .orElseThrow(()->new ApplicationException(ErrorMessage.INTERNAL_ERROR));
     }
 
     @Deprecated
