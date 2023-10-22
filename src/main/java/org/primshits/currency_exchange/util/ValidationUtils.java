@@ -7,7 +7,7 @@ import org.primshits.currency_exchange.exceptions.ErrorMessage;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ValidationUtils {
-    public static void validateCurrency(String code, String name, String sign) {
+    public static void validateCurrency(String name, String code, String sign) {
         if (InputStringUtils.isEmptyField(code, name, sign) || !CurrencyUtils.isValid(code, name, sign) || code.length() != 3) {
             throw new ApplicationException(ErrorMessage.INVALID_CURRENCY_INPUT);
         }

@@ -30,7 +30,7 @@ public class ExchangeRatePage extends BaseServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws  IOException {
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws  IOException {
         String currencyPair = InputStringUtils.parsePathInfo(req);
 
         String baseCurrencyCode = currencyPair.substring(0,3);

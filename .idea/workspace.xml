@@ -477,7 +477,7 @@
       <workItem from="1697744714248" duration="3545000" />
       <workItem from="1697835203986" duration="1101000" />
       <workItem from="1697913674727" duration="8154000" />
-      <workItem from="1697957717111" duration="1902000" />
+      <workItem from="1697957717111" duration="2638000" />
     </task>
     <task id="LOCAL-00001" summary="Before web.xml deleted">
       <created>1694116522823</created>
@@ -640,5 +640,16 @@
     <MESSAGE value="service/dao fix" />
     <MESSAGE value="add updateRate method to ExchangeRatesServiceService" />
     <option name="LAST_COMMIT_MESSAGE" value="add updateRate method to ExchangeRatesServiceService" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/primshits/currency_exchange/controller/exchange/ExchangeRatePage.java</url>
+          <line>36</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
