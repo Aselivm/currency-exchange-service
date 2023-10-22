@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.eclipse.jgit:org.eclipse.jgit.ssh.apache:6.6.0.202305301015-r">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../java_projects/.m2/repository/org/eclipse/jgit/org.eclipse.jgit.ssh.apache/6.6.0.202305301015-r/org.eclipse.jgit.ssh.apache-6.6.0.202305301015-r.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../../../java_projects/.m2/repository/org/eclipse/jgit/org.eclipse.jgit.ssh.apache/6.6.0.202305301015-r/org.eclipse.jgit.ssh.apache-6.6.0.202305301015-r-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../../java_projects/.m2/repository/org/eclipse/jgit/org.eclipse.jgit.ssh.apache/6.6.0.202305301015-r/org.eclipse.jgit.ssh.apache-6.6.0.202305301015-r-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

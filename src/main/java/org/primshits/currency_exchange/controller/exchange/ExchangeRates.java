@@ -35,7 +35,7 @@ public class ExchangeRates extends BaseServlet {
         String targetCurrencyCode = req.getParameter("targetCurrencyCode");
         String rate = req.getParameter("rate");
         try{
-            ValidationUtils.validateExchangeRate(baseCurrencyCode,targetCurrencyCode,rate);
+            ValidationUtils.validateExchange(baseCurrencyCode,targetCurrencyCode,rate);
             double parsedRate = Double.parseDouble(rate);
             ExchangeRateDTO exchangeRateDTO = exchangeRatesService.putToDTO(baseCurrencyCode, targetCurrencyCode, parsedRate);
             exchangeRatesService.save(exchangeRatesService.convert(exchangeRateDTO));

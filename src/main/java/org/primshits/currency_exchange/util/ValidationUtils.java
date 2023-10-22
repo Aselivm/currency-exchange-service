@@ -19,8 +19,8 @@ public class ValidationUtils {
         }
     }
 
-    public static void validateExchangeRate(String baseCurrencyCode,String targetCurrencyCode,String rate){
-        if(InputStringUtils.isEmptyField(baseCurrencyCode,targetCurrencyCode,rate)||!ExchangeRateUtils.isValid(baseCurrencyCode,targetCurrencyCode)){
+    public static void validateExchange(String baseCurrencyCode, String targetCurrencyCode, String digit){
+        if(InputStringUtils.isEmptyField(baseCurrencyCode,targetCurrencyCode,digit)||!ExchangeRateUtils.isValid(baseCurrencyCode,targetCurrencyCode)){
             throw new ApplicationException(ErrorMessage.INVALID_EXCHANGE_RATE_INPUT);
         }
     }

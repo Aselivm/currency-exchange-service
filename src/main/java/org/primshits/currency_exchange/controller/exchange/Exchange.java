@@ -5,6 +5,7 @@ import org.primshits.currency_exchange.dto.response.ExchangeResponse;
 import org.primshits.currency_exchange.exceptions.ApplicationException;
 import org.primshits.currency_exchange.exceptions.ExceptionHandler;
 import org.primshits.currency_exchange.models.ExchangeRate;
+import org.primshits.currency_exchange.util.ValidationUtils;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,14 +18,16 @@ public class Exchange extends BaseServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String from = req.getParameter("from");
         String to = req.getParameter("to");
-        double amount = Double.parseDouble(req.getParameter("amount"));
+        String amount = (req.getParameter("amount"));
         try {
+            ValidationUtils.validateExchange(from,to,amount);
+            double parsedAmount = Double.parseDouble(amount);
             ExchangeRate exchangeRate = exchangeRatesService.get(from,to);
             double rate = exchangeRate.getRate();
-            double convertedAmount = amount * rate;
+            double convertedAmount = parsedAmount * rate;
             ExchangeResponse exchangeResponse = new ExchangeResponse(exchangeRate.getBaseCurrency(), exchangeRate.getTargetCurrency()
                     , rate
-                    , amount
+                    , parsedAmount
                     , convertedAmount);
             objectMapper.writeValue(resp.getOutputStream(), exchangeResponse);
         }catch (ApplicationException e){

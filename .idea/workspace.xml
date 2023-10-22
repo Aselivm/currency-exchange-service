@@ -1,0 +1,644 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="CurrencyExchange:war exploded" />
+    </artifacts-to-build>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="90bdadcd-ee2b-4e1a-9fa3-231aeb807c97" name="Changes" comment="add updateRate method to ExchangeRatesServiceService" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Jsp File" />
+        <option value="Tag Library Descriptor" />
+        <option value="Interface" />
+        <option value="Enum" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/main/java/org/primshits/currency_exchange/controller/exchange/ExchangeRates.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/org/primshits/currency_exchange/dao/ExchangeRatesDAO.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/org/primshits/currency_exchange/dto/ExchangeRateDTO.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="jar://$MAVEN_REPOSITORY$/javax/servlet/javax.servlet-api/4.0.1/javax.servlet-api-4.0.1.jar!/javax/servlet/http/HttpServlet.class" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="LogFilters">
+    <option name="FILTER_ERRORS" value="false" />
+    <option name="FILTER_WARNINGS" value="false" />
+    <option name="FILTER_INFO" value="true" />
+    <option name="FILTER_DEBUG" value="true" />
+    <option name="CUSTOM_FILTER" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="$PROJECT_DIR$/../../../java_projects/tools/apache-maven-3.8.6" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectId" id="2UIszCQMwHwFeKLyb5XXjL8pV4i" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;19&quot;,
+    &quot;last_opened_file_path&quot;: &quot;A:/SpringCourse-master/SpringCourse-master/Lesson24.SpringFormsValidation&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2045977&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;xpath.settings&quot;,
+    &quot;sql.rename.search.for.storage.occurrences&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;ChangesTree.GroupingKeys&quot;: [
+      &quot;module&quot;,
+      &quot;directory&quot;
+    ],
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;sqlite&quot;,
+      &quot;mysql&quot;
+    ]
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="A:\Aselium\JavaIJ\CurrencyExchange\src\main\webapp\WEB-INF\lib" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Tomcat Server.apache-tomcat-8.5.93">
+    <configuration name="JBoss/WildFly 29.0.1.Final" type="JBossConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="JBoss/WildFly 29.0.1.Final" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
+      <option name="OPEN_IN_BROWSER" value="false" />
+      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080/" />
+      <option name="UPDATING_POLICY" value="restart-server" />
+      <deployment>
+        <artifact name="CurrencyExchange:war exploded">
+          <settings />
+        </artifact>
+      </deployment>
+      <server-settings>
+        <option name="SERVER" />
+        <option name="BINDING_SET_NAME" value="" />
+        <option name="DOMAIN" value="false" />
+        <option name="SERVER_GROUP" />
+        <option name="USERNAME" value="" />
+        <option name="CREDENTIAL_ALIAS" />
+      </server-settings>
+      <predefined_log_file enabled="true" id="JBoss" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="50384" />
+      </RunnerSettings>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <method v="2">
+        <option name="Make" enabled="true" />
+        <option name="BuildArtifacts" enabled="true">
+          <artifact name="CurrencyExchange:war exploded" />
+        </option>
+      </method>
+    </configuration>
+    <configuration default="true" type="JBossConfiguration" factoryName="Local" ALTERNATIVE_JRE_ENABLED="false">
+      <deployment />
+      <server-settings>
+        <option name="SERVER" value="" />
+        <option name="BINDING_SET_NAME" value="" />
+        <option name="DOMAIN" value="false" />
+        <option name="SERVER_GROUP" value="" />
+        <option name="USERNAME" value="" />
+      </server-settings>
+      <predefined_log_file enabled="true" id="JBoss" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CurrencyExchange [jetty:run]" type="MavenRunConfiguration" factoryName="Maven" temporary="true">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="jetty:run" />
+              </list>
+            </option>
+            <option name="pomFileName" value="pom.xml" />
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="$PROJECT_DIR$" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method v="2" />
+    </configuration>
+    <configuration name="Currency.jsp" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" temporary="true" APPLICATION_SERVER_NAME="apache-tomcat-8.5.93" ALTERNATIVE_JRE_ENABLED="false">
+      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080/Currency.jsp" />
+      <deployment>
+        <artifact name="CurrencyExchange:war exploded">
+          <settings>
+            <option name="CONTEXT_PATH" value="/CurrencyExchange_war_exploded" />
+          </settings>
+        </artifact>
+      </deployment>
+      <server-settings>
+        <option name="BASE_DIRECTORY_NAME" value="f1b06aff-c6e7-49d6-94b8-ce0a895d8b22" />
+      </server-settings>
+      <predefined_log_file enabled="true" id="Tomcat" />
+      <predefined_log_file enabled="true" id="Tomcat Catalina" />
+      <predefined_log_file id="Tomcat Manager" />
+      <predefined_log_file id="Tomcat Host Manager" />
+      <predefined_log_file id="Tomcat Localhost Access" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="50466" />
+      </RunnerSettings>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Profile">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <method v="2">
+        <option name="Make" enabled="true" />
+        <option name="BuildArtifacts" enabled="true">
+          <artifact name="CurrencyExchange:war exploded" />
+        </option>
+      </method>
+    </configuration>
+    <configuration name="apache-tomcat-8.5.93" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="apache-tomcat-8.5.93" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="19" nameIsGenerated="true">
+      <option name="OPEN_IN_BROWSER" value="false" />
+      <option name="UPDATING_POLICY" value="restart-server" />
+      <deployment>
+        <artifact name="CurrencyExchange:war exploded">
+          <settings>
+            <option name="CONTEXT_PATH" value="" />
+          </settings>
+        </artifact>
+      </deployment>
+      <server-settings>
+        <option name="BASE_DIRECTORY_NAME" value="bc3d329b-4eb0-4ba4-8a94-3c5e07027f8e" />
+      </server-settings>
+      <predefined_log_file enabled="true" id="Tomcat" />
+      <predefined_log_file enabled="true" id="Tomcat Catalina" />
+      <predefined_log_file id="Tomcat Manager" />
+      <predefined_log_file id="Tomcat Host Manager" />
+      <predefined_log_file id="Tomcat Localhost Access" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="49921" />
+      </RunnerSettings>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Profile">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <method v="2">
+        <option name="Make" enabled="true" />
+        <option name="BuildArtifacts" enabled="true">
+          <artifact name="CurrencyExchange:war exploded" />
+        </option>
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="JBoss/WildFly Server.JBoss/WildFly 29.0.1.Final" />
+      <item itemvalue="Maven.CurrencyExchange [jetty:run]" />
+      <item itemvalue="Tomcat Server.apache-tomcat-8.5.93" />
+      <item itemvalue="Tomcat Server.Currency.jsp" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Tomcat Server.Currency.jsp" />
+        <item itemvalue="Maven.CurrencyExchange [jetty:run]" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="90bdadcd-ee2b-4e1a-9fa3-231aeb807c97" name="Changes" comment="" />
+      <created>1692638697410</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1692638697410</updated>
+      <workItem from="1692638704411" duration="62000" />
+      <workItem from="1692648682608" duration="2692000" />
+      <workItem from="1692820516128" duration="3903000" />
+      <workItem from="1692896718089" duration="7224000" />
+      <workItem from="1693066927608" duration="871000" />
+      <workItem from="1693069092097" duration="253000" />
+      <workItem from="1693226043459" duration="7239000" />
+      <workItem from="1693252783021" duration="2446000" />
+      <workItem from="1693415323065" duration="194000" />
+      <workItem from="1693415547948" duration="3612000" />
+      <workItem from="1693673018039" duration="5112000" />
+      <workItem from="1693767352116" duration="1482000" />
+      <workItem from="1693941921611" duration="958000" />
+      <workItem from="1694107669728" duration="9760000" />
+      <workItem from="1694120233796" duration="1181000" />
+      <workItem from="1694202397865" duration="1065000" />
+      <workItem from="1694203484361" duration="359000" />
+      <workItem from="1694203856146" duration="2351000" />
+      <workItem from="1694278673088" duration="13096000" />
+      <workItem from="1694343347209" duration="10998000" />
+      <workItem from="1694459233116" duration="4031000" />
+      <workItem from="1694537820474" duration="7409000" />
+      <workItem from="1694630854578" duration="20000" />
+      <workItem from="1694970762131" duration="4319000" />
+      <workItem from="1695227481052" duration="4438000" />
+      <workItem from="1695231938722" duration="1381000" />
+      <workItem from="1695296844122" duration="11069000" />
+      <workItem from="1695313439624" duration="5099000" />
+      <workItem from="1695381856009" duration="1191000" />
+      <workItem from="1695395630719" duration="4154000" />
+      <workItem from="1695405210691" duration="6155000" />
+      <workItem from="1695422737756" duration="651000" />
+      <workItem from="1695638301674" duration="1326000" />
+      <workItem from="1695668609053" duration="3578000" />
+      <workItem from="1695672217648" duration="6053000" />
+      <workItem from="1695682141851" duration="44000" />
+      <workItem from="1695742034438" duration="2428000" />
+      <workItem from="1695746062469" duration="2136000" />
+      <workItem from="1695748230626" duration="413000" />
+      <workItem from="1695748669839" duration="2060000" />
+      <workItem from="1695750746412" duration="6495000" />
+      <workItem from="1695765171049" duration="1483000" />
+      <workItem from="1695766675873" duration="4893000" />
+      <workItem from="1695834174032" duration="5248000" />
+      <workItem from="1695845851608" duration="10410000" />
+      <workItem from="1695946812119" duration="4029000" />
+      <workItem from="1696014959163" duration="8390000" />
+      <workItem from="1696030094471" duration="247000" />
+      <workItem from="1696030360238" duration="19753000" />
+      <workItem from="1696066539272" duration="199000" />
+      <workItem from="1696067492344" duration="3347000" />
+      <workItem from="1696686258161" duration="865000" />
+      <workItem from="1696700471015" duration="1555000" />
+      <workItem from="1696707562555" duration="153000" />
+      <workItem from="1696765429323" duration="1069000" />
+      <workItem from="1696959920437" duration="7626000" />
+      <workItem from="1697051804881" duration="1721000" />
+      <workItem from="1697129320107" duration="11253000" />
+      <workItem from="1697143090248" duration="729000" />
+      <workItem from="1697143917120" duration="1857000" />
+      <workItem from="1697229760285" duration="4497000" />
+      <workItem from="1697292012107" duration="6652000" />
+      <workItem from="1697359559811" duration="5281000" />
+      <workItem from="1697391962716" duration="390000" />
+      <workItem from="1697652145642" duration="8392000" />
+      <workItem from="1697733672248" duration="998000" />
+      <workItem from="1697735280663" duration="4752000" />
+      <workItem from="1697744714248" duration="3545000" />
+      <workItem from="1697835203986" duration="1101000" />
+      <workItem from="1697913674727" duration="8154000" />
+      <workItem from="1697957717111" duration="1226000" />
+    </task>
+    <task id="LOCAL-00001" summary="Before web.xml deleted">
+      <created>1694116522823</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1694116522823</updated>
+    </task>
+    <task id="LOCAL-00002" summary="After web.xml deleted">
+      <created>1694116569857</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1694116569857</updated>
+    </task>
+    <task id="LOCAL-00003" summary="10.09">
+      <created>1694379062920</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1694379062920</updated>
+    </task>
+    <task id="LOCAL-00004" summary="10.09">
+      <created>1694379075881</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1694379075881</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Add ExchangeRatesDAO &amp; ExchangeRate model">
+      <created>1694546263415</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1694546263415</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Raw project done!">
+      <created>1695231901045</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1695231901045</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Add DTO">
+      <created>1695317383684</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1695317383684</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Add cross exchange">
+      <created>1695397620218</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1695397620218</updated>
+    </task>
+    <task id="LOCAL-00009" summary="add class CurrencyPage and ExchangeRatePage">
+      <created>1695407469616</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1695407469616</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Merge remote-tracking branch 'origin/master'&#10;&#10;# Conflicts:&#10;#&#9;src/main/java/org/primshits/currency_exchange/controller/Currencies.java&#10;#&#9;src/main/java/org/primshits/currency_exchange/controller/Exchange.java&#10;#&#9;src/main/java/org/primshits/currency_exchange/controller/ExchangeRates.java&#10;#&#9;src/main/java/org/primshits/currency_exchange/controller/newCurrency.java&#10;#&#9;src/main/java/org/primshits/currency_exchange/dao/CRUD.java&#10;#&#9;target/CurrencyExchange-1.0-SNAPSHOT/WEB-INF/classes/org/primshits/currency_exchange/dao/CRUD.class&#10;#&#9;target/CurrencyExchange-1.0-SNAPSHOT/WEB-INF/classes/org/primshits/currency_exchange/dao/CurrencyDAO.class&#10;#&#9;target/CurrencyExchange-1.0-SNAPSHOT/WEB-INF/classes/org/primshits/currency_exchange/models/Currency.class&#10;#&#9;target/classes/org/primshits/currency_exchange/dao/CRUD.class&#10;#&#9;target/classes/org/primshits/currency_exchange/dao/CurrencyDAO.class&#10;#&#9;target/classes/org/primshits/currency_exchange/models/Currency.class">
+      <created>1695407582252</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1695407582252</updated>
+    </task>
+    <task id="LOCAL-00011" summary="delete target">
+      <created>1695408115185</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1695408115185</updated>
+    </task>
+    <task id="LOCAL-00012" summary="fixed gitignore bag">
+      <created>1695408271889</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1695408271889</updated>
+    </task>
+    <task id="LOCAL-00013" summary="add connection pool">
+      <created>1695670955510</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1695670955510</updated>
+    </task>
+    <task id="LOCAL-00014" summary="json implementation">
+      <created>1696052015358</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1696052015358</updated>
+    </task>
+    <task id="LOCAL-00015" summary="service/dao fix">
+      <created>1697140514337</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1697140514337</updated>
+    </task>
+    <task id="LOCAL-00016" summary="add updateRate method to ExchangeRatesServiceService">
+      <created>1697656379367</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1697656379367</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Before web.xml deleted" />
+    <MESSAGE value="After web.xml deleted" />
+    <MESSAGE value="10.09" />
+    <MESSAGE value="Add ExchangeRatesDAO &amp; ExchangeRate model" />
+    <MESSAGE value="Added DTO" />
+    <MESSAGE value="Raw project done!" />
+    <MESSAGE value="Add DTO" />
+    <MESSAGE value="Add cross exchange" />
+    <MESSAGE value="add class CurrencyPage and ExchangeRatePage" />
+    <MESSAGE value="Merge remote-tracking branch 'origin/master'&#10;&#10;# Conflicts:&#10;#&#9;src/main/java/org/primshits/currency_exchange/controller/Currencies.java&#10;#&#9;src/main/java/org/primshits/currency_exchange/controller/Exchange.java&#10;#&#9;src/main/java/org/primshits/currency_exchange/controller/ExchangeRates.java&#10;#&#9;src/main/java/org/primshits/currency_exchange/controller/newCurrency.java&#10;#&#9;src/main/java/org/primshits/currency_exchange/dao/CRUD.java&#10;#&#9;target/CurrencyExchange-1.0-SNAPSHOT/WEB-INF/classes/org/primshits/currency_exchange/dao/CRUD.class&#10;#&#9;target/CurrencyExchange-1.0-SNAPSHOT/WEB-INF/classes/org/primshits/currency_exchange/dao/CurrencyDAO.class&#10;#&#9;target/CurrencyExchange-1.0-SNAPSHOT/WEB-INF/classes/org/primshits/currency_exchange/models/Currency.class&#10;#&#9;target/classes/org/primshits/currency_exchange/dao/CRUD.class&#10;#&#9;target/classes/org/primshits/currency_exchange/dao/CurrencyDAO.class&#10;#&#9;target/classes/org/primshits/currency_exchange/models/Currency.class" />
+    <MESSAGE value="delete target" />
+    <MESSAGE value="fix .gitignore bag" />
+    <MESSAGE value="fixed gitignore bag" />
+    <MESSAGE value="add connection pool" />
+    <MESSAGE value="json implementation" />
+    <MESSAGE value="service/dao fix" />
+    <MESSAGE value="add updateRate method to ExchangeRatesServiceService" />
+    <option name="LAST_COMMIT_MESSAGE" value="add updateRate method to ExchangeRatesServiceService" />
+  </component>
+</project>
