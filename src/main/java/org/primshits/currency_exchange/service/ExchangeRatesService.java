@@ -30,6 +30,7 @@ public class ExchangeRatesService {
     public ExchangeRate get(int id) {
         return exchangeRatesDAO.show(id).orElseThrow(()->new ApplicationException(ErrorMessage.EXCHANGE_RATE_NOT_FOUND));
     }
+
     public ExchangeRate get(String baseCurrencyCode, String targetCurrencyCode) {
 
         if (baseCurrencyCode.equals(targetCurrencyCode)) return sameCurrencyExchangeRateModelByCode(baseCurrencyCode);

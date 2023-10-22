@@ -9,28 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="90bdadcd-ee2b-4e1a-9fa3-231aeb807c97" name="Changes" comment="add updateRate method to ExchangeRatesServiceService">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sample/servlet/container/deploy/directory/WEB-INF/classes/org/primshits/currency_exchange/controller/currencies/Currencies.class" beforeDir="false" afterPath="$PROJECT_DIR$/sample/servlet/container/deploy/directory/WEB-INF/classes/org/primshits/currency_exchange/controller/currencies/Currencies.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sample/servlet/container/deploy/directory/WEB-INF/classes/org/primshits/currency_exchange/controller/exchange/ExchangeRatePage.class" beforeDir="false" afterPath="$PROJECT_DIR$/sample/servlet/container/deploy/directory/WEB-INF/classes/org/primshits/currency_exchange/controller/exchange/ExchangeRatePage.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sample/servlet/container/deploy/directory/WEB-INF/classes/org/primshits/currency_exchange/controller/exchange/ExchangeRates.class" beforeDir="false" afterPath="$PROJECT_DIR$/sample/servlet/container/deploy/directory/WEB-INF/classes/org/primshits/currency_exchange/controller/exchange/ExchangeRates.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sample/servlet/container/deploy/directory/WEB-INF/classes/org/primshits/currency_exchange/dao/CRUD.class" beforeDir="false" afterPath="$PROJECT_DIR$/sample/servlet/container/deploy/directory/WEB-INF/classes/org/primshits/currency_exchange/dao/CRUD.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sample/servlet/container/deploy/directory/WEB-INF/classes/org/primshits/currency_exchange/dao/CurrencyDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/sample/servlet/container/deploy/directory/WEB-INF/classes/org/primshits/currency_exchange/dao/CurrencyDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sample/servlet/container/deploy/directory/WEB-INF/classes/org/primshits/currency_exchange/dao/ExchangeRatesDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/sample/servlet/container/deploy/directory/WEB-INF/classes/org/primshits/currency_exchange/dao/ExchangeRatesDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sample/servlet/container/deploy/directory/WEB-INF/classes/org/primshits/currency_exchange/service/CurrencyService.class" beforeDir="false" afterPath="$PROJECT_DIR$/sample/servlet/container/deploy/directory/WEB-INF/classes/org/primshits/currency_exchange/service/CurrencyService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sample/servlet/container/deploy/directory/WEB-INF/classes/org/primshits/currency_exchange/service/ExchangeRatesService.class" beforeDir="false" afterPath="$PROJECT_DIR$/sample/servlet/container/deploy/directory/WEB-INF/classes/org/primshits/currency_exchange/service/ExchangeRatesService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/primshits/currency_exchange/controller/currencies/Currencies.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/primshits/currency_exchange/controller/currencies/Currencies.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/primshits/currency_exchange/controller/exchange/ExchangeRatePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/primshits/currency_exchange/controller/exchange/ExchangeRatePage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/primshits/currency_exchange/controller/exchange/ExchangeRates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/primshits/currency_exchange/controller/exchange/ExchangeRates.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/primshits/currency_exchange/dao/CRUD.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/primshits/currency_exchange/dao/CRUD.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/primshits/currency_exchange/dao/CurrencyDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/primshits/currency_exchange/dao/CurrencyDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/primshits/currency_exchange/dao/ExchangeRatesDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/primshits/currency_exchange/dao/ExchangeRatesDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/primshits/currency_exchange/service/CurrencyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/primshits/currency_exchange/service/CurrencyService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/primshits/currency_exchange/service/ExchangeRatesService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/primshits/currency_exchange/service/ExchangeRatesService.java" afterDir="false" />
-    </list>
+    <list default="true" id="90bdadcd-ee2b-4e1a-9fa3-231aeb807c97" name="Changes" comment="add updateRate method to ExchangeRatesServiceService" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -663,16 +642,5 @@
     <MESSAGE value="service/dao fix" />
     <MESSAGE value="add updateRate method to ExchangeRatesServiceService" />
     <option name="LAST_COMMIT_MESSAGE" value="add updateRate method to ExchangeRatesServiceService" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/primshits/currency_exchange/controller/exchange/ExchangeRates.java</url>
-          <line>27</line>
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
