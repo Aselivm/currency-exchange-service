@@ -4,6 +4,7 @@ import org.primshits.currency_exchange.controller.BaseServlet;
 import org.primshits.currency_exchange.dto.ExchangeRateDTO;
 import org.primshits.currency_exchange.exceptions.ApplicationException;
 import org.primshits.currency_exchange.exceptions.ExceptionHandler;
+import org.primshits.currency_exchange.util.JsonUtils;
 import org.primshits.currency_exchange.util.ValidationUtils;
 
 import javax.servlet.ServletException;
@@ -23,7 +24,7 @@ public class ExchangeRates extends BaseServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try{
             resp.setStatus(HttpServletResponse.SC_OK);
-            objectMapper.writeValue(resp.getOutputStream(),exchangeRatesService.getAll());
+            JsonUtils.write(resp,exchangeRatesService.getAll());
         }catch (ApplicationException e){
             ExceptionHandler.handle(resp,e);
         }
@@ -40,7 +41,7 @@ public class ExchangeRates extends BaseServlet {
             ExchangeRateDTO exchangeRateDTO = exchangeRatesService.putToDTO(baseCurrencyCode, targetCurrencyCode, parsedRate);
             exchangeRatesService.save(exchangeRatesService.convert(exchangeRateDTO));
             resp.setStatus(HttpServletResponse.SC_OK);
-            objectMapper.writeValue(resp.getOutputStream(),exchangeRatesService.get(baseCurrencyCode,targetCurrencyCode));
+            JsonUtils.write(resp,exchangeRatesService.get(baseCurrencyCode,targetCurrencyCode));
         }catch (ApplicationException e){
             ExceptionHandler.handle(resp,e);
         }

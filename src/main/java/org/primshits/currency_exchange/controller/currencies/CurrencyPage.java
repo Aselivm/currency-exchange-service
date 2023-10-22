@@ -1,13 +1,11 @@
 package org.primshits.currency_exchange.controller.currencies;
 
 import org.primshits.currency_exchange.controller.BaseServlet;
-import org.primshits.currency_exchange.dto.response.ErrorResponse;
 import org.primshits.currency_exchange.exceptions.ApplicationException;
-import org.primshits.currency_exchange.exceptions.ErrorMessage;
 import org.primshits.currency_exchange.exceptions.ExceptionHandler;
 import org.primshits.currency_exchange.models.Currency;
-import org.primshits.currency_exchange.util.CurrencyUtils;
 import org.primshits.currency_exchange.util.InputStringUtils;
+import org.primshits.currency_exchange.util.JsonUtils;
 import org.primshits.currency_exchange.util.ValidationUtils;
 
 import javax.servlet.ServletException;
@@ -25,7 +23,7 @@ public class CurrencyPage extends BaseServlet {
             ValidationUtils.validateCurrency(currencyCode);
             Currency currency = currencyService.get(currencyCode);
             resp.setStatus(HttpServletResponse.SC_OK);
-            objectMapper.writeValue(resp.getOutputStream(),currency);
+            JsonUtils.write(resp,currency);
         }catch (ApplicationException e){
             ExceptionHandler.handle(resp,e);
         }

@@ -4,11 +4,9 @@ import org.primshits.currency_exchange.dao.ExchangeRatesDAO;
 import org.primshits.currency_exchange.dto.ExchangeRateDTO;
 import org.primshits.currency_exchange.exceptions.ApplicationException;
 import org.primshits.currency_exchange.exceptions.ErrorMessage;
-import org.primshits.currency_exchange.exceptions.NotFoundException;
 import org.primshits.currency_exchange.models.Currency;
 import org.primshits.currency_exchange.models.ExchangeRate;
 import org.primshits.currency_exchange.util.ExchangeRateUtils;
-import org.primshits.currency_exchange.util.ValidationUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -60,7 +58,7 @@ public class ExchangeRatesService {
     }
 
     @Deprecated
-    public void delete(int id) throws NotFoundException {
+    public void delete(int id){
         exchangeRatesDAO.delete(id);
     }
 

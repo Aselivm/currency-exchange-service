@@ -5,6 +5,7 @@ import org.primshits.currency_exchange.dto.response.ExchangeResponse;
 import org.primshits.currency_exchange.exceptions.ApplicationException;
 import org.primshits.currency_exchange.exceptions.ExceptionHandler;
 import org.primshits.currency_exchange.models.ExchangeRate;
+import org.primshits.currency_exchange.util.JsonUtils;
 import org.primshits.currency_exchange.util.ValidationUtils;
 
 import javax.servlet.annotation.WebServlet;
@@ -29,7 +30,7 @@ public class Exchange extends BaseServlet {
                     , rate
                     , parsedAmount
                     , convertedAmount);
-            objectMapper.writeValue(resp.getOutputStream(), exchangeResponse);
+            JsonUtils.write(resp,exchangeResponse);
         }catch (ApplicationException e){
             ExceptionHandler.handle(resp,e);
         }

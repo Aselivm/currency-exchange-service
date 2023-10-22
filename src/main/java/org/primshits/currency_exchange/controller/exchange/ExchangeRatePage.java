@@ -5,6 +5,7 @@ import org.primshits.currency_exchange.exceptions.ApplicationException;
 import org.primshits.currency_exchange.exceptions.ExceptionHandler;
 import org.primshits.currency_exchange.models.ExchangeRate;
 import org.primshits.currency_exchange.util.InputStringUtils;
+import org.primshits.currency_exchange.util.JsonUtils;
 import org.primshits.currency_exchange.util.ValidationUtils;
 
 import javax.servlet.ServletException;
@@ -22,7 +23,7 @@ public class ExchangeRatePage extends BaseServlet {
             ValidationUtils.validateExchangeRate(currencyPair);
             ExchangeRate exchangeRate = exchangeRatesService.getExchangeRateFromCurrencyPair(currencyPair);
             resp.setStatus(HttpServletResponse.SC_OK);
-            objectMapper.writeValue(resp.getOutputStream(), exchangeRate);
+            JsonUtils.write(resp,exchangeRate);
         }catch (ApplicationException e){
             ExceptionHandler.handle(resp,e);
         }
@@ -40,7 +41,7 @@ public class ExchangeRatePage extends BaseServlet {
             double parsedRate = Double.parseDouble(req.getParameter("rate"));
             exchangeRatesService.updateRate(baseCurrencyCode, targetCurrencyCode, parsedRate);
             ExchangeRate exchangeRate = exchangeRatesService.get(baseCurrencyCode,targetCurrencyCode);
-            objectMapper.writeValue(resp.getOutputStream(),exchangeRate);
+            JsonUtils.write(resp,exchangeRate);
         }catch (ApplicationException e){
             ExceptionHandler.handle(resp,e);
         }

@@ -5,6 +5,7 @@ import org.primshits.currency_exchange.dto.CurrencyDTO;
 import org.primshits.currency_exchange.exceptions.ApplicationException;
 import org.primshits.currency_exchange.exceptions.ExceptionHandler;
 import org.primshits.currency_exchange.models.Currency;
+import org.primshits.currency_exchange.util.JsonUtils;
 import org.primshits.currency_exchange.util.ValidationUtils;
 
 import javax.servlet.ServletException;
@@ -31,7 +32,7 @@ public class Currencies extends BaseServlet {
             CurrencyDTO currencyDTO = currencyService.putToDTO(name, code, sign);
             currencyService.save(currencyService.convert(currencyDTO));
             resp.setStatus(HttpServletResponse.SC_OK);
-            objectMapper.writeValue(resp.getOutputStream(), currencyService.get(code));
+            JsonUtils.write(resp,currencyService.get(code));
         }catch (ApplicationException e){
             ExceptionHandler.handle(resp,e);
         }
@@ -42,7 +43,7 @@ public class Currencies extends BaseServlet {
         try {
             List<Currency> currencyList = currencyService.getAll();
             resp.setStatus(HttpServletResponse.SC_OK);
-            objectMapper.writeValue(resp.getOutputStream(),currencyList);
+            JsonUtils.write(resp,currencyList);
         }catch (ApplicationException e){
             ExceptionHandler.handle(resp,e);
         }
