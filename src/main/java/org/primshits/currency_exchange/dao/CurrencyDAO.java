@@ -29,7 +29,7 @@ public class CurrencyDAO extends BaseDAO implements CRUD<Currency> {
                 Currency currency = new Currency();
                 currency.setId(resultSet.getInt("ID"));
                 currency.setCode(resultSet.getString("Code"));
-                currency.setFullName(resultSet.getString("FullName"));
+                currency.setName(resultSet.getString("FullName"));
                 currency.setSign(resultSet.getString("Sign"));
                 currencies.add(currency);
             }
@@ -66,7 +66,7 @@ public class CurrencyDAO extends BaseDAO implements CRUD<Currency> {
             PreparedStatement preparedStatement =
                     connection.prepareStatement(SAVE);
             preparedStatement.setString(1,currency.getCode());
-            preparedStatement.setString(2,currency.getFullName());
+            preparedStatement.setString(2,currency.getName());
             preparedStatement.setString(3,currency.getSign());
 
             preparedStatement.executeUpdate();
@@ -85,7 +85,7 @@ public class CurrencyDAO extends BaseDAO implements CRUD<Currency> {
             PreparedStatement preparedStatement =
                     connection.prepareStatement(UPDATE);
             preparedStatement.setString(1,currency.getCode());
-            preparedStatement.setString(2,currency.getFullName());
+            preparedStatement.setString(2,currency.getName());
             preparedStatement.setString(3,currency.getSign());
             preparedStatement.setInt(4,id);
 
